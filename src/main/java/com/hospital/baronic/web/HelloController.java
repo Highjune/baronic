@@ -1,4 +1,4 @@
-package com.hospital.baronic.controller;
+package com.hospital.baronic.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
