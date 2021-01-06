@@ -1,0 +1,44 @@
+// 프로젝트의 프럴그인 의존성 관리를 위한 설정
+buildscript {
+    //전역변수 설정
+    ext {
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+//밑의 4가지는 자바와 스프링 부트를 사용하기 위해 필수 플러그인
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' //스프링 부트의 의존성들을 관리해주는 플러그인.
+
+group 'com.hospital'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+//각종 의존성(라이브러리)들을 어떤 원격 저장소에서 받을지 정하는 것
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+//프로젝트 개발에 필요한 의존성들을 선언하는 곳.
+//버전명시 하면 안됨. 위의 전역변수로 설정한 SpringBootVersion을 맞춰간다.(각 라이브러리들의 버전 관리가 한 곳에 집중되고, 버전 충돌 문제도 해결됨)
+//필요한 것들 의존성 찾아서 추가하면 됨
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.projectlombok:lombok')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('com.h2database:h2')
+    compile('org.mariadb.jdbc:mariadb-java-client')
+    compile('org.springframework.session:spring-session-jdbc')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+}
