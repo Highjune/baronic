@@ -13,10 +13,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientService {
 
-    //checkreservation()
+    @Autowired
+    private PatientRepository patientRepository;
 
+    public int addTestReservation(String name, String gender, int age, String diagnosis_content) {
+        Patient patient = new Patient(name, gender, age, diagnosis_content);
+        this.patientRepository.save(patient); // save에 커서 두고 ctrl + b (호출하는메서드 찾아감) 눌러보면 jpa기본 CRUD다 볼수있음
+        return patient.getId();
+    }
 
-    //deleteReservation()
-
-
+    public List<Patient> getAllReservations() {
+        return this.patientRepository.findAll();
+    }
 }
