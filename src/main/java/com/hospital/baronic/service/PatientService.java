@@ -13,12 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientService {
 
-    @Autowired
-    private PatientRepository patientrepository;
+    //checkreservation()
 
-    public List<Patient> findAllPatients(){
-        List<Patient> patients = new ArrayList<Patient>();
-        patients = patientrepository.findAll();
-        return patients;
-    }
+
+    //deleteReservation()
+
+
 }

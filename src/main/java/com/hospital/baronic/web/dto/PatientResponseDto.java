@@ -10,10 +10,10 @@ public class PatientResponseDto {
     private int age;
     private String diagnosis_content;
 
-    public PatientResponseDto(Patient entity){
-        this.name = entity.getName();
-        this.gender = entity.getGender();
-        this.age = entity.getAge();
-        this.diagnosis_content = entity.getDiagnosis_content();
-    }
+//    public PatientResponseDto(Patient entity){
+//        this.name = entity.getName();
+//        this.gender = entity.getGender();
+//        this.age = entity.getAge();
+//        this.diagnosis_content = entity.getDiagnosis_content();
+//    }
 }

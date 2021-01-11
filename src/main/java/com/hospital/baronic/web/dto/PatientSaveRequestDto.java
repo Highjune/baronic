@@ -4,9 +4,11 @@ import com.hospital.baronic.domain.patient.Patient;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 //domain에 있는 Patient(이건 Entity클래스) 와 거의 유사하지만 다름
 @Getter
+@Setter
 @NoArgsConstructor
 public class PatientSaveRequestDto {
     private String name;
@@ -22,12 +24,12 @@ public class PatientSaveRequestDto {
         this.diagnosis_content = diagnosis_content;
     }
 
-    public Patient toEntity(){
-        return Patient.builder()
-                .name(name)
-                .gender(gender)
-                .age(age)
-                .diagnosis_content(diagnosis_content)
-                .build();
-    }
+//    public Patient toEntity(){
+//        return Patient.builder()
+//                .name(name)
+//                .gender(gender)
+//                .age(age)
+//                .diagnosis_content(diagnosis_content)
+//                .build();
+//    }
 }

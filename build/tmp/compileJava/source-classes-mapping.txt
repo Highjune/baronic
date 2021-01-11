@@ -1,10 +1,20 @@
+com/hospital/baronic/domain/patient/Patient.java
+ com.hospital.baronic.domain.patient.Patient
+com/hospital/baronic/domain/patient/PatientRepository.java
+ com.hospital.baronic.domain.patient.PatientRepository
+com/hospital/baronic/web/HelloController.java
+ com.hospital.baronic.web.HelloController
 com/hospital/baronic/Application.java
  com.hospital.baronic.Application
-com/hospital/baronic/controller/ReservationController.java
- com.hospital.baronic.controller.ReservationController
-com/hospital/baronic/dto/PatientDto.java
- com.hospital.baronic.dto.PatientDto
-com/hospital/baronic/controller/HelloController.java
- com.hospital.baronic.controller.HelloController
-com/hospital/baronic/service/ReservationService.java
- com.hospital.baronic.service.ReservationService
+com/hospital/baronic/web/dto/PatientResponseDto.java
+ com.hospital.baronic.web.dto.PatientResponseDto
+com/hospital/baronic/web/dto/PatientUpdateRequestDto.java
+ com.hospital.baronic.web.dto.PatientUpdateRequestDto
+com/hospital/baronic/web/dto/PatientSaveRequestDto.java
+ com.hospital.baronic.web.dto.PatientSaveRequestDto
+com/hospital/baronic/web/dto/PatientListResponseDto.java
+ com.hospital.baronic.web.dto.PatientListResponseDto
+com/hospital/baronic/service/PatientService.java
+ com.hospital.baronic.service.PatientService
+com/hospital/baronic/web/PatientController.java
+ com.hospital.baronic.web.PatientController
