@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PatientService {
 
+
     @Autowired
     private PatientRepository patientRepository;
 
@@ -25,4 +26,5 @@ public class PatientService {
     public List<Patient> getAllReservations() {
         return this.patientRepository.findAll();
     }
+
 }
