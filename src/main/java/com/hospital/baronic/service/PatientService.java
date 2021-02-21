@@ -15,8 +15,6 @@ public class PatientService {
 
     //checkreservation()
 
-
     //deleteReservation()
-
 
 }
