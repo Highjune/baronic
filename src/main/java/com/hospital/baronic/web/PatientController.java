@@ -58,8 +58,8 @@ public class PatientController {
 
     @GetMapping("/insertChart")
     public String insertChart(){
-        int chartId = -1;
-        String name = "";
+//        int chartId = -1;
+//        String name = "";
 
         String ans = "finished";
 
@@ -73,17 +73,20 @@ public class PatientController {
 
             XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0을 준다), 만약 각 시트를 읽기 위해서는 for문을 한번 더 돌려준다.
             // 행의 수
-            int rows = sheet.getPhysicalNumberOfRows(); // rows = 229
+            int rows = sheet.getPhysicalNumberOfRows(); // 229행
 //            for(rowindex=0 ; rowindex<rows; rowindex++) { // 0행~228행(총 229행)
-            for(rowindex=1 ; rowindex<rows; rowindex++) { // 0행~228행(총 229행)
+            for(rowindex=1 ; rowindex<rows; rowindex++) { // 1행~228행(총 228행) - 1행부터 읽기시작 (0행 제외)
                 // 행 읽기 시작
                 XSSFRow row = sheet.getRow(rowindex);
                 if(row != null) {
-                    // 셀의 수
-//                    int cells = row.getPhysicalNumberOfCells(); // 전체 cell 구할 대
+
+                    int chartId = -1;
+                    String name = "";
+
+//                    int cells = row.getPhysicalNumberOfCells(); // 전체 cell 구할 때
                     int cells = 3;
 //                    for(columnindex=0; columnindex<=cells; columnindex++) {
-                    for(columnindex=2; columnindex<=cells; columnindex++) {
+                    for(columnindex=2 ; columnindex<=cells ; columnindex++) { // 2열부터 3열(cells) 까지만
                         // 셀 값을 읽는다.
                         XSSFCell cell = row.getCell(columnindex);
                         String value = "";
@@ -119,13 +122,22 @@ public class PatientController {
 //                                    value=cell.getErrorCellValue()+"";
 //                                    break;
                             }
+
+                            if(columnindex %2 == 0){ // 짝수
+                                chartId = Integer.parseInt(value);
+//                                chartId = (int)value;
+                            } else { // 홀수
+                                name = value;
+                            }
+
                             System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은 : " + value);
 
-//                            chartId = Integer.parseInt(value);
-//                            System.out.println("chartId : " + chartId);
+                            // columnindex의 홀,짝으로 구분하면 될 듯
+//                            this.patientService.addTestReservation(100, "test"); // 잘 들어감
                         }
                         System.out.println("========here1=======");
                     }
+                        this.patientService.addTestReservation(chartId, name);
                         System.out.println("========here2=======");
                 }
                         System.out.println("========here3=======");

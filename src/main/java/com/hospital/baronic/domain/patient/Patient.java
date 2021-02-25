@@ -14,7 +14,7 @@ public class Patient extends BaseTimeEntity{
     @Id // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private int id;
-    private int chartId;
+    private int chart_Id;
 
     @Column
     private String name;

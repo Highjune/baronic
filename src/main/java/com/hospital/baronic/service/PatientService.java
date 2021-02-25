@@ -20,10 +20,10 @@ public class PatientService {
 //        this.patientRepository.save(patient); // save에 커서 두고 ctrl + b (호출하는메서드 찾아감) 눌러보면 jpa기본 CRUD다 볼수있음
 //        return patient.getId();
 
-    public int addTestReservation(int chartId, String name) {
-        Patient patient = new Patient(chartId, name);
+    public int addTestReservation(int chart_Id, String name) {
+        Patient patient = new Patient(chart_Id, name);
         this.patientRepository.save(patient); // save에 커서 두고 ctrl + b (호출하는메서드 찾아감) 눌러보면 jpa기본 CRUD다 볼수있음
-        return patient.getChartId();
+        return patient.getChart_Id();
     }
 
     public List<Patient> getAllReservations() {
