@@ -133,20 +133,13 @@ public class PatientController {
                             } else { // 홀수
                                 name = value;
                             }
-
                             System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은 : " + value);
-
-                            // columnindex의 홀,짝으로 구분하면 될 듯
-//                            this.patientService.addTestReservation(100, "test"); // 잘 들어감
                         }
-                        System.out.println("========here1=======");
                     } // 안 for문 끝. 2~3열
                         this.patientService.addTestReservation(chartId, name);
-                        System.out.println("========here2=======");
                 }
-                        System.out.println("========here3=======");
             } // 바깥 for문 끝. 228행
-                        System.out.println("========here4=======");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
