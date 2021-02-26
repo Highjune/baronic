@@ -11,9 +11,9 @@ import javax.persistence.*;
 @Entity(name="patient")
 // 이렇게 앞으로 추가될 엔티티들은 등록일/수정일은 고민할 필요x. BasetimeEntity만 상속받으면 자동으로 해결된다.
 public class Patient extends BaseTimeEntity{
-    @Id // pk
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private int id;
+    @Id // pk
     private int chart_Id;
 
     @Column

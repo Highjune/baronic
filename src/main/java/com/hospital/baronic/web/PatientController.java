@@ -81,12 +81,12 @@ public class PatientController {
                 if(row != null) {
 
                     int chartId = -1;
+                    double temp = 0;
                     String name = "";
 
 //                    int cells = row.getPhysicalNumberOfCells(); // 전체 cell 구할 때
-                    int cells = 3;
 //                    for(columnindex=0; columnindex<=cells; columnindex++) {
-                    for(columnindex=2 ; columnindex<=cells ; columnindex++) { // 2열부터 3열(cells) 까지만
+                    for(columnindex=2 ; columnindex<=3 ; columnindex++) { // 2열부터 3열(cells) 까지만
                         // 셀 값을 읽는다.
                         XSSFCell cell = row.getCell(columnindex);
                         String value = "";
@@ -124,8 +124,12 @@ public class PatientController {
                             }
 
                             if(columnindex %2 == 0){ // 짝수
-                                chartId = Integer.parseInt(value);
+//                                chartId = Integer.parseInt(value);
 //                                chartId = (int)value;
+                                temp = Double.parseDouble(value); // "18.0" -> 18.0
+                                chartId = Integer.parseInt(String.valueOf(Math.round(temp)));
+//                                System.out.println("chartId = " + chartId);
+
                             } else { // 홀수
                                 name = value;
                             }
@@ -136,15 +140,15 @@ public class PatientController {
 //                            this.patientService.addTestReservation(100, "test"); // 잘 들어감
                         }
                         System.out.println("========here1=======");
-                    }
+                    } // 안 for문 끝. 2~3열
                         this.patientService.addTestReservation(chartId, name);
                         System.out.println("========here2=======");
                 }
                         System.out.println("========here3=======");
-            }
+            } // 바깥 for문 끝. 228행
                         System.out.println("========here4=======");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return ans;
     }
