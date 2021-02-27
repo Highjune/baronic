@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//domain에 있는 Patient(이건 Entity클래스) 와 거의 유사하지만 다름
+
 @Getter
 @Setter
 @NoArgsConstructor
