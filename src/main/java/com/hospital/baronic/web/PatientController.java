@@ -57,7 +57,7 @@ public class PatientController {
     }
 
     @GetMapping("/insertChart")
-    public String insertChart(){
+    public String insertChart() {
 //        int chartId = -1;
 //        String name = "";
 
@@ -75,10 +75,10 @@ public class PatientController {
             // 행의 수
             int rows = sheet.getPhysicalNumberOfRows(); // 229행
 //            for(rowindex=0 ; rowindex<rows; rowindex++) { // 0행~228행(총 229행)
-            for(rowindex=1 ; rowindex<rows; rowindex++) { // 1행~228행(총 228행) - 1행부터 읽기시작 (0행 제외)
+            for (rowindex = 1; rowindex < rows; rowindex++) { // 1행~228행(총 228행) - 1행부터 읽기시작 (0행 제외)
                 // 행 읽기 시작
                 XSSFRow row = sheet.getRow(rowindex);
-                if(row != null) {
+                if (row != null) {
 
                     int chartId = -1;
                     double temp = 0;
@@ -86,26 +86,31 @@ public class PatientController {
 
 //                    int cells = row.getPhysicalNumberOfCells(); // 전체 cell 구할 때
 //                    for(columnindex=0; columnindex<=cells; columnindex++) {
-                    for(columnindex=2 ; columnindex<=3 ; columnindex++) { // 2열부터 3열(cells) 까지만
+                    for (columnindex = 2; columnindex <= 3; columnindex++) { // 2열부터 3열(cells) 까지만
                         // 셀 값을 읽는다.
                         XSSFCell cell = row.getCell(columnindex);
                         String value = "";
                         // 셀이 빈 값일 경우를 위한 널체크
-                        if(cell == null) {
+                        if (cell == null) {
                             continue;
                         } else {
                             // 타입별로 내용 읽기
-                            switch(cell.getCellType()) {
+                            switch (cell.getCellType()) {
                                 case XSSFCell.CELL_TYPE_FORMULA:
-                                    value=cell.getCellFormula(); break;
+                                    value = cell.getCellFormula();
+                                    break;
                                 case XSSFCell.CELL_TYPE_NUMERIC:
-                                    value=cell.getNumericCellValue()+""; break;
+                                    value = cell.getNumericCellValue() + "";
+                                    break;
                                 case XSSFCell.CELL_TYPE_STRING:
-                                    value=cell.getStringCellValue()+""; break;
+                                    value = cell.getStringCellValue() + "";
+                                    break;
                                 case XSSFCell.CELL_TYPE_BLANK:
-                                    value=cell.getBooleanCellValue()+""; break;
+                                    value = cell.getBooleanCellValue() + "";
+                                    break;
                                 case XSSFCell.CELL_TYPE_ERROR:
-                                    value=cell.getErrorCellValue()+""; break;
+                                    value = cell.getErrorCellValue() + "";
+                                    break;
 //                                case FORMULA:
 //                                    value = cell.getCellFormula();
 //                                    break;
@@ -123,7 +128,7 @@ public class PatientController {
 //                                    break;
                             }
 
-                            if(columnindex %2 == 0){ // 짝수
+                            if (columnindex % 2 == 0) { // 짝수
 //                                chartId = Integer.parseInt(value);
 //                                chartId = (int)value;
                                 temp = Double.parseDouble(value); // "18.0" -> 18.0
@@ -136,7 +141,7 @@ public class PatientController {
                             System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은 : " + value);
                         }
                     } // 안 for문 끝. 2~3열
-                        this.patientService.addTestReservation(chartId, name);
+                    this.patientService.addTestReservation(chartId, name);
                 }
             } // 바깥 for문 끝. 228행
 
