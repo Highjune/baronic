@@ -1,7 +1,7 @@
 package com.hospital.baronic.service;
 
-import com.hospital.baronic.domain.Diagnosis.Reservation;
-import com.hospital.baronic.domain.Diagnosis.ReservationRepository;
+import com.hospital.baronic.domain.Reservation.Reservation;
+import com.hospital.baronic.domain.Reservation.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

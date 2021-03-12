@@ -1,4 +1,4 @@
-package com.hospital.baronic.domain.Diagnosis;
+package com.hospital.baronic.domain.Reservation;
 
 import com.hospital.baronic.domain.patient.BaseTimeEntity;
 import lombok.AllArgsConstructor;

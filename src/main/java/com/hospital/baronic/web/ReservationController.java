@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 public class ReservationController {
@@ -18,79 +20,7 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-//    @GetMapping("/insertSchedule_old") // row 먼저 읽기(가로로)
-//    public String insertSchedule(){
-////        int chartId = -1;
-////        String name = "";
-//
-//        String ans = "insert schedule finished1";
-//
-//        try {
-//
-//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 나중에 파일 이름 날짜로 변환해서 넣기
-//            XSSFWorkbook workbook = new XSSFWorkbook(file);
-//
-//            int rowindex = 0;
-//            int columnindex = 0;
-//
-//            XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0을 준다), 만약 각 시트를 읽기 위해서는 for문을 한번 더 돌려준다.
-//            // 행의 수
-//            int rows = sheet.getPhysicalNumberOfRows(); // 229행
-//            for(rowindex=0 ; rowindex<rows; rowindex++) { // 0행~228행(총 229행)
-////            for(rowindex=1 ; rowindex<rows; rowindex++) { // 1행~228행(총 228행) - 1행부터 읽기시작 (0행 제외)
-//                // 행 읽기 시작
-//                XSSFRow row = sheet.getRow(rowindex);
-//                if(row != null) {
-//
-//                    // 컬럼
-////                    int chartId = -1;
-////                    String name = "";
-//                    if(rowindex == 0) {
-//                        columnindex = 1; // "시간" cell 안 읽음
-//                    } else {
-//                        columnindex = 0;
-//                    }
-//
-//                    int cells = row.getPhysicalNumberOfCells(); // 전체 cell 구할 때
-//                    for(;columnindex<=cells; columnindex++) {
-////                    for(columnindex=0; columnindex<=cells; columnindex++) {
-////                    for(columnindex=2 ; columnindex<=3 ; columnindex++) { // 2열부터 3열(cells) 까지만
-//                        // 셀 값을 읽는다.
-//                        XSSFCell cell = row.getCell(columnindex);
-//                        String value = "";
-//                        // 셀이 빈 값일 경우를 위한 널체크
-//                        if(cell == null) {
-//                            continue;
-//                        } else {
-//                            // 타입별로 내용 읽기
-//                            switch(cell.getCellType()) {
-//                                case XSSFCell.CELL_TYPE_FORMULA:
-//                                    value=cell.getCellFormula(); break;
-//                                case XSSFCell.CELL_TYPE_NUMERIC:
-//                                    value=cell.getNumericCellValue()+""; break;
-//                                case XSSFCell.CELL_TYPE_STRING:
-//                                    value=cell.getStringCellValue()+""; break;
-//                                case XSSFCell.CELL_TYPE_BLANK:
-//                                    value=cell.getBooleanCellValue()+""; break;
-//                                case XSSFCell.CELL_TYPE_ERROR:
-//                                    value=cell.getErrorCellValue()+""; break;
-//                            }
-//                            System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은 : " + value);
-//                        }
-//                    } // 안 for문 끝.
-//                } else {
-//                    String row_null_error = "row = null";
-//                    return row_null_error;
-//                }
-//            } // 바깥 for문 끝.
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return ans;
-//    }
-
-    @GetMapping("/insertSchedule") // column 먼저 읽기(세로로)
+    @GetMapping("/insert") // column 먼저 읽기(세로로)
     public String insertSchedule() {
 //        int chartId = -1;
 //        String name = "";
@@ -99,18 +29,26 @@ public class ReservationController {
 
         try {
 
-            // M) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
+            // A) TODO 병원에서 생성되는 파일 PATH 넣기
+//            Date todayDate = new Date();
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+//            String yyyyMMdd = simpleDateFormat.format(todayDate);
+//            String directoryPath = "C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\"; // 파일의 위치
+//            String reservationExcelFileName = "예약내역(" + yyyyMMdd + ").xls"; //  파일 이름
+//            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
+
+            // TODO 나중에 자동생성되는 파일을 읽어들일 때는 아래 줄(FileInput~) 주석처리하고 위의 A)문단 주석풀기
             FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls");
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             int columnindex = 0;
 //            int rowindex = 1; // 0행(day) 은 미리 따로 읽을것임
-            XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0을 준다), 만약 각 시트를 읽기 위해서는 for문을 한번 더 돌려준다.
+            XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0), 만약 각 시트를 읽기 위해서는 for문으로 더.
 
             XSSFRow firstRow = sheet.getRow(0);
-            int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수
+            int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 8)
 
-            String reservation_date = ""; // M) 데이터 형식은 Date로 변환하기(DB컬럼도), reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
+            String reservation_date = ""; // TODO 데이터 형식은 Date로 변환하기(DB컬럼도), reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
 //            String reservation_content = "";
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +143,7 @@ public class ReservationController {
 
                     String value = "";
                     if (cell == null) {
-//                        value = "no_data"; // M) 이거 해결해야 됨. 공백도 데이터로 인식하게 해야 시간이랑 매칭이 맞음(안 그러면 밀림)
+//                        value = "no_data"; // TODO 이거 해결해야 됨. 공백도 데이터로 인식하게 해야 시간이랑 매칭이 맞음(안 그러면 밀림)
                         continue;
                     } else {
                         // 타입별로 내용 읽기
