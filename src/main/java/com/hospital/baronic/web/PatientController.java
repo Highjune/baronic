@@ -71,7 +71,8 @@ public class PatientController {
 //            String fileName = strNowDate + "_진료일검색.xls";
 
             // 수동 파일이름(이전 날짜든지 ..)
-            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\20210115_진료일검색.xls");
+//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\20210115_진료일검색.xls"); // 집pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\20210115_진료일검색.xls"); // 회사pc 경로
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             int rowindex = 0;

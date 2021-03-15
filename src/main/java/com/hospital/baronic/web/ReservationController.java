@@ -100,7 +100,9 @@ public class ReservationController {
         try {
 
             // M) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
-            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls");
+//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
+
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             int columnindex = 0;
