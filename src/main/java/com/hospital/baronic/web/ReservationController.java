@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 public class ReservationController {
@@ -40,7 +42,7 @@ public class ReservationController {
             XSSFRow firstRow = sheet.getRow(0);
             int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수
 
-            String reservation_date = ""; // TODO) 데이터 형식은 Date로 변환하기(DB컬럼도), reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
+            String reservation_date = ""; // reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
 //            String reservation_content = "";
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,13 +161,17 @@ public class ReservationController {
                         System.out.println(columnindex + "번 열 " + rowindex + "번 행 값은 : " + value);
                     }
 
-                    reservation_date = reservation_day.get(columnindex-1) + reservation_time.get(rowindex-1);
+                    reservation_date = reservation_day.get(columnindex-1) + " " + reservation_time.get(rowindex-1); // 01/10(일요일) 오전10:00
                     reservation_content = value;
 
+                    SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
+                    Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
+
                     System.out.println("===========================================================");
-                    System.out.println(reservation_date + "---" + reservation_content);
+                    System.out.println(reservation_date + "----here---" + reservation_content);
                     System.out.println("===========================================================");
-                    this.reservationService.insertReservationSchedule(reservation_date, reservation_content);
+//                    this.reservationService.insertReservationSchedule(reservation_date, reservation_content);
+                    this.reservationService.insertReservationSchedule(dateTypeReservation_date, reservation_content);
 
                 } // 안쪽 for문 끝
 //                    System.out.println("===========================================================");

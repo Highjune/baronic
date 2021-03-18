@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @NoArgsConstructor
 @Getter
@@ -23,9 +24,9 @@ public class Reservation extends BaseTimeEntity {
 //    private int chart_id;
 
     // 진료날짜
-    @Column // M) diag_date를 Date로 변환하기
-    private String reservation_date;
-//    private Date diag_date;
+    @Column //
+    private Date reservation_date;
+//    private String reservation_date;
 
     //진료 내용
     @Column
@@ -34,8 +35,15 @@ public class Reservation extends BaseTimeEntity {
     @Column // 0(invalid), 1(valid)
     private int is_valid;
 
+//    @Builder
+//    public Reservation(String reservation_date, String reservation_content){
+//        super();
+//        this.reservation_date = reservation_date;
+//        this.reservation_content = reservation_content;
+//    }
+
     @Builder
-    public Reservation(String reservation_date, String reservation_content){
+    public Reservation(Date reservation_date, String reservation_content){
         super();
         this.reservation_date = reservation_date;
         this.reservation_content = reservation_content;
