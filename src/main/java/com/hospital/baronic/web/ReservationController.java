@@ -20,7 +20,8 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @GetMapping("/insert") // column 먼저 읽기(세로로)
+    @GetMapping("/insertSchedule") // column 먼저 읽기(세로로)
+
     public String insertSchedule() {
 //        int chartId = -1;
 //        String name = "";
@@ -37,8 +38,10 @@ public class ReservationController {
 //            String reservationExcelFileName = "예약내역(" + yyyyMMdd + ").xls"; //  파일 이름
 //            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
 
-            // TODO 나중에 자동생성되는 파일을 읽어들일 때는 아래 줄(FileInput~) 주석처리하고 위의 A)문단 주석풀기
-            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls");
+            // TODO) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
+//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
+
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             int columnindex = 0;
@@ -49,6 +52,7 @@ public class ReservationController {
             int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 8)
 
             String reservation_date = ""; // TODO 데이터 형식은 Date로 변환하기(DB컬럼도), reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
+
 //            String reservation_content = "";
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +147,8 @@ public class ReservationController {
 
                     String value = "";
                     if (cell == null) {
-//                        value = "no_data"; // TODO 이거 해결해야 됨. 공백도 데이터로 인식하게 해야 시간이랑 매칭이 맞음(안 그러면 밀림)
+//                        value = "no_data"; // TODO) 이거 해결해야 됨. 공백도 데이터로 인식하게 해야 시간이랑 매칭이 맞음(안 그러면 밀림)
+
                         continue;
                     } else {
                         // 타입별로 내용 읽기
@@ -167,13 +172,17 @@ public class ReservationController {
                         System.out.println(columnindex + "번 열 " + rowindex + "번 행 값은 : " + value);
                     }
 
-                    reservation_date = reservation_day.get(columnindex-1) + reservation_time.get(rowindex-1);
+                    reservation_date = reservation_day.get(columnindex-1) + " " + reservation_time.get(rowindex-1); // 01/10(일요일) 오전10:00
                     reservation_content = value;
 
+                    SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
+                    Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
+
                     System.out.println("===========================================================");
-                    System.out.println(reservation_date + "---" + reservation_content);
+                    System.out.println(reservation_date + "----here---" + reservation_content);
                     System.out.println("===========================================================");
-                    this.reservationService.insertReservationSchedule(reservation_date, reservation_content);
+//                    this.reservationService.insertReservationSchedule(reservation_date, reservation_content);
+                    this.reservationService.insertReservationSchedule(dateTypeReservation_date, reservation_content);
 
                 } // 안쪽 for문 끝
 //                    System.out.println("===========================================================");
