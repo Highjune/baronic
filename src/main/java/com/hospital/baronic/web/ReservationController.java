@@ -39,8 +39,8 @@ public class ReservationController {
 //            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
 
             // TODO) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
-//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
-            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
+//            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
 
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -139,6 +139,9 @@ public class ReservationController {
                 int rowindex = 1;
 
                 String reservation_content = "";
+                String todo = "";
+                int chart_id = -1;
+                String dump = "";
 
                 // 안쪽 for문 시작(행)
                 for (; rowindex < rows ; rowindex++) { // 총 90행 // Q) < or <=
@@ -173,16 +176,86 @@ public class ReservationController {
                     }
 
                     reservation_date = reservation_day.get(columnindex-1) + " " + reservation_time.get(rowindex-1); // 01/10(일요일) 오전10:00
-                    reservation_content = value;
+//                    reservation_content = value;
+                    // dump
+                    dump = value;
 
+                    //reservation_date
                     SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
                     Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
 
+                    // 할일(to두) 와 chart_id 파싱 시작
+                    int big_right_boundary = -1; // "]"
+                    int small_left_boundary_first = -1; // 첫번째 "("
+                    int small_right_boundary_first = -1; // 첫번째 ")"
+                    int small_left_boundary_second = -1; // 두번째 ")"
+                    char[] reservation_content_arr = dump.toCharArray();
+
+                    if (dump.contains("temp")) {
+                        // temp O
+                        // ex)    [주호성]잇사라펀스켈링신규.(temp1879)\r\n(정수지)
+                        for (int i = 0 ; i < reservation_content_arr.length ; i++) {
+                            if (reservation_content_arr[i] == '(') {
+                                small_left_boundary_first = i;
+//                                chart_id = Integer.parseInt(dump.substring(small_left_boundary_first+5, small_left_boundary_first+9)); // 1879. 이렇게 하면 안되는 형식이 있음.
+                                chart_id = -1;
+                                break;
+                            }
+                        }
+
+                        for (int i = 0 ; i < reservation_content_arr.length ; i++) {
+                            if (reservation_content_arr[i] == ']') {
+                                big_right_boundary = i;
+                                todo = dump.substring(big_right_boundary+1, small_left_boundary_first); // 잇사라펀스켈링신규.
+                                break;
+                            }
+                        }
+
+//                        System.out.println("---------temp O ---------");
+//                        System.out.println("chart_id : " + chart_id + " todo : " + todo);
+
+                    } else {
+                        // tmep X
+                        // ex)    [주호성]피타야콤(02448)\r\nTel:010(하악DBS+#36 B.pit)"
+                        for (int i = 0 ; i < reservation_content_arr.length ; i++) {
+                            if (reservation_content_arr[i] == '(') {
+                                small_left_boundary_first = i;
+                                break;
+                            }
+                        }
+
+                        for (int i = 0 ; i < reservation_content_arr.length ; i++) {
+                            if (reservation_content_arr[i] == ')') {
+                                small_right_boundary_first = i;
+                                break;
+                            }
+                        }
+
+                        chart_id = Integer.parseInt(dump.substring(small_left_boundary_first+1, small_right_boundary_first));
+
+                        String reservation_content_after = "";
+                        reservation_content_after = dump.substring(small_left_boundary_first+1);
+                        char[] reservation_content_arr_after = reservation_content_after.toCharArray();
+
+                        for (int i = 0 ; i < reservation_content_arr_after.length ; i++) {
+                            if (reservation_content_arr_after[i] == '(') {
+                                small_left_boundary_second = i;
+                                break;
+                            }
+                            reservation_content_after.substring(small_left_boundary_second+1);
+                        }
+
+                        todo = reservation_content_after.substring(small_left_boundary_second+1, reservation_content_after.length()-2);
+//                        System.out.println("---------temp X ---------");
+//                        System.out.println("chard_id : " + chart_id + " todo : " + todo);
+                    }
+
                     System.out.println("===========================================================");
-                    System.out.println(reservation_date + "----here---" + reservation_content);
+                    System.out.println("chart_id : " + chart_id + ", todo : " + todo + ", dump : " +  dump + ", reservation_date : " +  dateTypeReservation_date);
                     System.out.println("===========================================================");
-//                    this.reservationService.insertReservationSchedule(reservation_date, reservation_content);
-                    this.reservationService.insertReservationSchedule(dateTypeReservation_date, reservation_content);
+                    /////////////////////////////////////////////////////////////////////////////////////////
+
+                    this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date);
 
                 } // 안쪽 for문 끝
 //                    System.out.println("===========================================================");

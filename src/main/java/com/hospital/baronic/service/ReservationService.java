@@ -22,8 +22,8 @@ public class ReservationService {
 //        return reservation.getReservation_id();
 //    }
 
-    public int insertReservationSchedule(Date diag_date, String diag_content) {
-        Reservation reservation = new Reservation(diag_date, diag_content); // chart_id 는 fk로 설정
+    public int insertReservationSchedule(int chart_id, String todo, String dump, Date reservation_date) {
+        Reservation reservation = new Reservation(chart_id, todo, dump, reservation_date); // chart_id 는 fk로 설정
         this.reservationRepository.save(reservation);
         return reservation.getReservation_id();
     }
