@@ -39,8 +39,8 @@ public class ReservationController {
 //            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
 
             // TODO) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
-            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
-//            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
+//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
 
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -150,7 +150,7 @@ public class ReservationController {
 
                     String value = "";
                     if (cell == null) {
-//                        value = "no_data"; // TODO) 이거 해결해야 됨. 공백도 데이터로 인식하게 해야 시간이랑 매칭이 맞음(안 그러면 밀림)
+//                        value = "no_data"; //
 
                         continue;
                     } else {
@@ -184,7 +184,7 @@ public class ReservationController {
                     SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
                     Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
 
-                    // 할일(to두) 와 chart_id 파싱 시작
+                    // 할일(to do) 와 chart_id 파싱 시작
                     int big_right_boundary = -1; // "]"
                     int small_left_boundary_first = -1; // 첫번째 "("
                     int small_right_boundary_first = -1; // 첫번째 ")"
@@ -211,11 +211,11 @@ public class ReservationController {
                             }
                         }
 
-//                        System.out.println("---------temp O ---------");
+//                        System.out.println("--------- temp O ---------");
 //                        System.out.println("chart_id : " + chart_id + " todo : " + todo);
 
                     } else {
-                        // tmep X
+                        // temp X
                         // ex)    [주호성]피타야콤(02448)\r\nTel:010(하악DBS+#36 B.pit)"
                         for (int i = 0 ; i < reservation_content_arr.length ; i++) {
                             if (reservation_content_arr[i] == '(') {
@@ -230,8 +230,11 @@ public class ReservationController {
                                 break;
                             }
                         }
-
-                        chart_id = Integer.parseInt(dump.substring(small_left_boundary_first+1, small_right_boundary_first));
+                        try {
+                            chart_id = Integer.parseInt(dump.substring(small_left_boundary_first + 1, small_right_boundary_first));
+                        } catch (NumberFormatException e) {
+                            chart_id = -1;
+                        }
 
                         String reservation_content_after = "";
                         reservation_content_after = dump.substring(small_left_boundary_first+1);
@@ -253,7 +256,7 @@ public class ReservationController {
                     System.out.println("===========================================================");
                     System.out.println("chart_id : " + chart_id + ", todo : " + todo + ", dump : " +  dump + ", reservation_date : " +  dateTypeReservation_date);
                     System.out.println("===========================================================");
-                    /////////////////////////////////////////////////////////////////////////////////////////
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date);
 
