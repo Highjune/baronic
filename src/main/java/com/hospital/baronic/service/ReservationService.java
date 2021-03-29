@@ -22,8 +22,8 @@ public class ReservationService {
 //        return reservation.getReservation_id();
 //    }
 
-    public int insertReservationSchedule(int chart_id, String todo, String dump, Date reservation_date) {
-        Reservation reservation = new Reservation(chart_id, todo, dump, reservation_date); // chart_id 는 fk로 설정
+    public int insertReservationSchedule(int chart_id, String todo, String dump, Date reservation_date, int position) {
+        Reservation reservation = new Reservation(chart_id, todo, dump, reservation_date,position); // chart_id 는 fk로 설정
         this.reservationRepository.save(reservation);
         return reservation.getReservation_id();
     }
@@ -110,14 +110,14 @@ public class ReservationService {
 //                        System.out.println("chard_id : " + chart_id + " todo : " + todo);
         }
 
-        Reservation reservation = new Reservation(chart_id, todo, dump);
-        reservation.builder()
+        Reservation inputReservationData = new Reservation(chart_id, todo, dump);
+        inputReservationData.builder()
                 .chart_id(chart_id)
                 .todo(todo)
                 .dump(dump)
                 .build();
 
-        return reservation;
+        return inputReservationData;
 
     }
 }

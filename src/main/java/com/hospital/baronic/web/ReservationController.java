@@ -44,70 +44,70 @@ public class ReservationController {
             XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0), 만약 각 시트를 읽기 위해서는 for문으로 더.
 
             XSSFRow firstRow = sheet.getRow(0);
-            int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 8)
+            int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 총 8개)
 
             String reservation_date = ""; // reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // 1) 날짜(day, "01/10일요일) 먼저 list에 담기
-            ArrayList<String> reservation_day = new ArrayList<String>(); // "01/10(일요일)", "01/11(월요일)" ...
-            for(int i = 1 ; i<=firstRowLength ; i++){ // 열의 총 갯수
+            // 1) 날짜(day, "01/10일요일", "01/11(월요일)", ...) 먼저 list에 담기
+            ArrayList<String> reservation_day_list = new ArrayList<String>(); // "01/10(일요일)", "01/11(월요일)", ...
+            for (int i = 1 ; i <= firstRowLength ; i++) { // 열의 총 갯수
 //                XSSFRow row = sheet.getRow(0); // 0행만 먼저 읽음
-                String value_1 = "";
-                if(firstRow != null) {
+                String reservation_day = "";
+                if (firstRow != null) {
                     XSSFCell cell = firstRow.getCell(i); // 첫번째 cell("시간") 제외라서 i=1부터
-                    if(cell == null) {
+                    if (cell == null) {
                         continue;
                     } else {
                         switch(cell.getCellType()) {
                             case XSSFCell.CELL_TYPE_FORMULA:
-                                value_1=cell.getCellFormula(); break;
+                                reservation_day = cell.getCellFormula(); break;
                             case XSSFCell.CELL_TYPE_NUMERIC:
-                                value_1=cell.getNumericCellValue()+""; break;
+                                reservation_day = cell.getNumericCellValue()+""; break;
                             case XSSFCell.CELL_TYPE_STRING:
-                                value_1=cell.getStringCellValue()+""; break;
+                                reservation_day = cell.getStringCellValue()+""; break;
                             case XSSFCell.CELL_TYPE_BLANK:
-                                value_1=cell.getBooleanCellValue()+""; break;
+                                reservation_day = cell.getBooleanCellValue()+""; break;
                             case XSSFCell.CELL_TYPE_ERROR:
-                                value_1=cell.getErrorCellValue()+""; break;
+                                reservation_day = cell.getErrorCellValue()+""; break;
                         }
                     }
                 }
-                reservation_day.add(value_1); // 담기
-            } // 1행(날짜들)만 읽는 for문 끝
+                reservation_day_list.add(reservation_day); // 담기
+            } // 첫 행(날짜들)만 읽는 for문 끝
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // 2) 시간(time, "오전 10:00") list에 담기
-            ArrayList<String> reservation_time = new ArrayList<String>();
+            ArrayList<String> reservation_time_list = new ArrayList<String>();
 
             int rows = sheet.getPhysicalNumberOfRows();
             for(int i = 1; i < rows ; i++){
                 XSSFRow row = sheet.getRow(i);
                 XSSFCell cell = row.getCell(0);
 
-                String value_2 = "";
+                String reservation_time = "";
                 if (cell == null){
                     continue;
                 } else {
                     switch (cell.getCellType()) {
                         case XSSFCell.CELL_TYPE_FORMULA:
-                            value_2 = cell.getCellFormula();
+                            reservation_time = cell.getCellFormula();
                             break;
                         case XSSFCell.CELL_TYPE_NUMERIC:
-                            value_2 = cell.getNumericCellValue() + "";
+                            reservation_time = cell.getNumericCellValue() + "";
                             break;
                         case XSSFCell.CELL_TYPE_STRING:
-                            value_2 = cell.getStringCellValue() + "";
+                            reservation_time = cell.getStringCellValue() + "";
                             break;
                         case XSSFCell.CELL_TYPE_BLANK:
-                            value_2 = cell.getBooleanCellValue() + "";
+                            reservation_time = cell.getBooleanCellValue() + "";
                             break;
                         case XSSFCell.CELL_TYPE_ERROR:
-                            value_2 = cell.getErrorCellValue() + "";
+                            reservation_time = cell.getErrorCellValue() + "";
                             break;
                     }
                 }
-                reservation_time.add(value_2); // 담기
+                reservation_time_list.add(reservation_time); // 담기
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,46 +120,45 @@ public class ReservationController {
                 String todo = "";
                 int chart_id = -1;
                 String dump = "";
+                int position = 0;
 
                 // 안쪽 for문 시작(행)
-                for (; rowindex < rows ; rowindex++) { // 총 90행 // Q) < or <=
+                for (; rowindex < rows ; rowindex++) { // 총 90행
                     XSSFRow row = sheet.getRow(rowindex); // 0행 제외하고 1행부터 시작
                     XSSFCell cell = row.getCell(columnindex);
 
-                    String value = "";
+                    String reservation_cell_data = "";
                     if (cell == null) {
-//                        value = "no_data"; //
-
+                        position++;
                         continue;
                     } else {
                         // 타입별로 내용 읽기
                         switch (cell.getCellType()) {
                             case XSSFCell.CELL_TYPE_FORMULA:
-                                value = cell.getCellFormula();
+                                reservation_cell_data = cell.getCellFormula();
                                 break;
                             case XSSFCell.CELL_TYPE_NUMERIC:
-                                value = cell.getNumericCellValue() + "";
+                                reservation_cell_data = cell.getNumericCellValue() + "";
                                 break;
                             case XSSFCell.CELL_TYPE_STRING:
-                                value = cell.getStringCellValue() + "";
+                                reservation_cell_data = cell.getStringCellValue() + "";
                                 break;
                             case XSSFCell.CELL_TYPE_BLANK:
-                                value = cell.getBooleanCellValue() + "";
+                                reservation_cell_data = cell.getBooleanCellValue() + "";
                                 break;
                             case XSSFCell.CELL_TYPE_ERROR:
-                                value = cell.getErrorCellValue() + "";
+                                reservation_cell_data = cell.getErrorCellValue() + "";
                                 break;
                         }
-                        System.out.println(columnindex + "번 열 " + rowindex + "번 행 값은 : " + value);
-
+                        System.out.println(columnindex + "번 열 " + rowindex + "번 행 값은 : " + reservation_cell_data);
                     }
 
-                    reservation_date = reservation_day.get(columnindex-1) + " " + reservation_time.get(rowindex-1); // 01/10(일요일) 오전10:00
+                    reservation_date = reservation_day_list.get(columnindex-1) + " " + reservation_time_list.get(rowindex-1); // 01/10(일요일) 오전10:00
                     SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
                     Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
 
                     // 엑셀데이터에서 chart_id와 to do를 파싱하기 위한 함수
-                    Reservation inputReservationData = this.reservationService.parsingReservationExcelDumpData(value);
+                    Reservation inputReservationData = this.reservationService.parsingReservationExcelDumpData(reservation_cell_data);
                     chart_id = inputReservationData.getChart_id();
                     todo = inputReservationData.getTodo();
                     dump = inputReservationData.getDump();
@@ -168,7 +167,8 @@ public class ReservationController {
                     System.out.println("chart_id : " + chart_id + ", todo : " + todo + ", dump : " +  dump + ", reservation_date : " +  dateTypeReservation_date);
                     System.out.println("===========================================================");
 
-                    this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date);
+                    this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date, position);
+                    position++;
 
                 } // 안쪽 for문 끝
 

@@ -19,8 +19,12 @@ public class Reservation extends BaseTimeEntity {
     @Id // pk
     private int reservation_id;
 
+
     @Column
     private int chart_id;
+
+    @Column
+    private String todo;
 
     //foreign key
 //    @Column(columnDefinition = "TEXT", nullable = false) // TODO) fk 처리하기
@@ -34,8 +38,6 @@ public class Reservation extends BaseTimeEntity {
 //    @Column
 //    private String reservation_content;
 
-    @Column
-    private String todo;
 
     @Column // 0(invalid), 1(valid)
     private int is_valid;
@@ -46,13 +48,17 @@ public class Reservation extends BaseTimeEntity {
     @Column
     private String dump;
 
+    @Column
+    private int position;
+
     @Builder
-    public Reservation(int chart_id, String todo, String dump, Date reservation_date){
+    public Reservation(int chart_id, String todo, String dump, Date reservation_date, int position){
         super();
         this.chart_id = chart_id;
         this.todo = todo;
         this.dump = dump;
         this.reservation_date = reservation_date;
+        this.position = position;
     }
 
     @Builder
