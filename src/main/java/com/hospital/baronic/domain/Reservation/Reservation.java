@@ -54,4 +54,12 @@ public class Reservation extends BaseTimeEntity {
         this.dump = dump;
         this.reservation_date = reservation_date;
     }
+
+    @Builder
+    public Reservation(int chart_id, String todo, String dump) {
+        super();
+        this.chart_id = chart_id;
+        this.todo = todo;
+        this.dump = dump;
+    }
 }
