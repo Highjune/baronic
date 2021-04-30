@@ -19,7 +19,6 @@ public class Reservation extends BaseTimeEntity {
     @Id // pk
     private int reservation_id;
 
-
     @Column
     private int chart_id;
 
