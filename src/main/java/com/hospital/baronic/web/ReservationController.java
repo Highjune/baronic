@@ -35,8 +35,8 @@ public class ReservationController {
 //            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
 
             // TODO) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
-//            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
-            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
+            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
+//            FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\baronic\\예약내역(20210110).xls"); // 회사pc 경로
 
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
@@ -157,6 +157,8 @@ public class ReservationController {
                     SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
                     Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
 
+
+
                     // 엑셀데이터에서 chart_id와 to do를 파싱하기 위한 함수
                     Reservation inputReservationData = this.reservationService.parsingReservationExcelDumpData(reservation_cell_data);
                     chart_id = inputReservationData.getChart_id();
@@ -168,7 +170,11 @@ public class ReservationController {
                     System.out.println("===========================================================");
 
                     this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date, position);
+
                     position++;
+                    if (!reservation_time_list.get(rowindex).equals(reservation_time_list.get(rowindex-1))){
+                        position = 0 ;
+                    }
 
                 } // 안쪽 for문 끝
 
