@@ -22,8 +22,8 @@ public class ReservationService {
 //        return reservation.getReservation_id();
 //    }
 
-    public int insertReservationSchedule(int chart_id, String todo, String dump, Date reservation_date, int position) {
-        Reservation reservation = new Reservation(chart_id, todo, dump, reservation_date,position); // chart_id 는 fk로 설정
+    public int insertReservationSchedule(String patient_name, int chart_id, String todo, String dump, Date reservation_date, int position) {
+        Reservation reservation = new Reservation(patient_name, chart_id, todo, dump, reservation_date, position); // chart_id 는 fk로 설정
         this.reservationRepository.save(reservation);
         return reservation.getReservation_id();
     }
@@ -36,6 +36,7 @@ public class ReservationService {
     public Reservation parsingReservationExcelDumpData(String dumpData) {
 
         int chart_id = -1;
+        String patient_name = "";
         String todo = "";
         String dump = "";
         dump = dumpData;
@@ -63,16 +64,23 @@ public class ReservationService {
                 if (reservation_content_arr[i] == ']') {
                     big_right_boundary = i;
                     todo = dump.substring(big_right_boundary+1, small_left_boundary_first); // 잇사라펀스켈링신규.
+                    patient_name = dump.substring(big_right_boundary+1, small_left_boundary_first); // 잇사라펀스켈링신규.
                     break;
                 }
             }
-
 //                        System.out.println("--------- temp O ---------");
 //                        System.out.println("chart_id : " + chart_id + " todo : " + todo);
 
         } else {
             // temp X
             // ex)    [주호성]피타야콤(02448)\r\nTel:010(하악DBS+#36 B.pit)"
+            for (int i = 0 ; i < reservation_content_arr.length ; i++) {
+                if (reservation_content_arr[i] == ']') {
+                    big_right_boundary = i;
+                    break;
+                }
+            }
+
             for (int i = 0 ; i < reservation_content_arr.length ; i++) {
                 if (reservation_content_arr[i] == '(') {
                     small_left_boundary_first = i;
@@ -85,6 +93,12 @@ public class ReservationService {
                     small_right_boundary_first = i;
                     break;
                 }
+            }
+
+            try {
+                patient_name = dump.substring(big_right_boundary + 1, small_left_boundary_first);
+            } catch (NumberFormatException e) {
+                patient_name = "error_name";
             }
 
             try {
@@ -110,12 +124,12 @@ public class ReservationService {
 //                        System.out.println("chard_id : " + chart_id + " todo : " + todo);
         }
 
-        Reservation inputReservationData = new Reservation(chart_id, todo, dump);
-        inputReservationData.builder()
-                .chart_id(chart_id)
-                .todo(todo)
-                .dump(dump)
-                .build();
+        Reservation inputReservationData = new Reservation(patient_name, chart_id, todo, dump);
+//        inputReservationData.builder()
+//                .chart_id(chart_id)
+//                .todo(todo)
+//                .dump(dump)
+//                .build();
 
         return inputReservationData;
 
