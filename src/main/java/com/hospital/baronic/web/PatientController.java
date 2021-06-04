@@ -120,21 +120,6 @@ public class PatientController {
                                 case XSSFCell.CELL_TYPE_ERROR:
                                     value = cell.getErrorCellValue() + "";
                                     break;
-//                                case FORMULA:
-//                                    value = cell.getCellFormula();
-//                                    break;
-//                                case NUMERIC:
-//                                    value = cell.getCellFormula();
-//                                    break;
-//                                case STRING:
-//                                    value = cell.getCellFormula();
-//                                    break;
-//                                case BLANK:
-//                                    value = cell.getCellFormula();
-//                                    break;
-//                                case ERROR:
-//                                    value=cell.getErrorCellValue()+"";
-//                                    break;
                             }
 
                             if (columnindex % 2 == 0) { // 짝수
