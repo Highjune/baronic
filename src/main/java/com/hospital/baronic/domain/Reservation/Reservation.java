@@ -1,6 +1,5 @@
 package com.hospital.baronic.domain.Reservation;
 
-import com.hospital.baronic.domain.patient.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
-@Entity(name="Reservation")
-public class Reservation extends BaseTimeEntity {
+public class Reservation {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id // pk
@@ -23,14 +21,10 @@ public class Reservation extends BaseTimeEntity {
     private String patient_name;
 
     @Column
-    private int chart_id;
+    private int chart_id; // 나중에 fk 처리하기
 
     @Column
     private String todo;
-
-    //foreign key
-//    @Column(columnDefinition = "TEXT", nullable = false) // TODO) fk 처리하기
-//    private int chart_id;
 
     // 진료날짜
     @Column //
@@ -40,7 +34,7 @@ public class Reservation extends BaseTimeEntity {
     private int is_valid;
 
     @Column
-    private boolean is_modifying;
+    private int is_modifying;
 
     @Column
     private String dump;

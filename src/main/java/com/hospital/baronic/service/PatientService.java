@@ -1,7 +1,9 @@
 package com.hospital.baronic.service;
 
 import com.hospital.baronic.domain.patient.Patient;
-import com.hospital.baronic.domain.patient.PatientRepository;
+import com.hospital.baronic.mapper.PatientMapper;
+import com.hospital.baronic.web.dto.PatientSaveRequestDto;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,21 +15,15 @@ import java.util.List;
 public class PatientService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientMapper patientMapper;
 
-//    public int addTestReservation(String name, String gender, int age, String diagnosis_content) {
-//        Patient patient = new Patient(name, gender, age, diagnosis_content);
-//        this.patientRepository.save(patient); // save에 커서 두고 ctrl + b (호출하는메서드 찾아감) 눌러보면 jpa기본 CRUD다 볼수있음
-//        return patient.getId();
-
-    public int insertPatientInfo(int chart_Id, String name) {
-        Patient patient = new Patient(chart_Id, name);
-        this.patientRepository.save(patient); // save에 커서 두고 ctrl + b (호출하는메서드 찾아감) 눌러보면 jpa기본 CRUD다 볼수있음
-        return patient.getChart_Id();
+    public void insertPatientInfo(int chart_Id, String name) throws Exception {
+        PatientSaveRequestDto patientSaveRequestDto = new PatientSaveRequestDto(chart_Id, name);
+        patientMapper.insertPatientInfo(patientSaveRequestDto);
     }
 
-    public List<Patient> getAllReservations() {
-        return this.patientRepository.findAll();
-    }
+//    public List<Patient> getAllReservations() {
+//        return this.patientRepository.findAll();
+//    }
 
 }

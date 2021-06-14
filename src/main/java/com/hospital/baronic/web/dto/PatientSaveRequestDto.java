@@ -11,25 +11,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PatientSaveRequestDto {
+    private int chart_Id;
     private String name;
-    private String gender;
-    private int age;
-    private String diagnosis_content;
 
     @Builder
-    public PatientSaveRequestDto(String name, String gender, int age, String diagnosis_content){
+    public PatientSaveRequestDto(int chart_Id, String name) {
+        this.chart_Id = chart_Id;
         this.name = name;
-        this.gender = gender;
-        this.age = age;
-        this.diagnosis_content = diagnosis_content;
     }
 
-//    public Patient toEntity(){
-//        return Patient.builder()
-//                .name(name)
-//                .gender(gender)
-//                .age(age)
-//                .diagnosis_content(diagnosis_content)
-//                .build();
-//    }
 }

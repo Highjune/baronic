@@ -28,11 +28,11 @@ public class ReservationController {
         try {
             // TODO 병원에서 생성되는 파일 PATH 넣기
 //            Date todayDate = new Date();
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-//            String yyyyMMdd = simpleDateFormat.format(todayDate);
-//            String directoryPath = "C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\"; // 파일의 위치
-//            String reservationExcelFileName = "예약내역(" + yyyyMMdd + ").xls"; //  파일 이름
-//            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
+////            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+////            String yyyyMMdd = simpleDateFormat.format(todayDate);
+////            String directoryPath = "C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\"; // 파일의 위치
+////            String reservationExcelFileName = "예약내역(" + yyyyMMdd + ").xls"; //  파일 이름
+////            FileInputStream file = new FileInputStream(directoryPath + reservationExcelFileName);
 
             // TODO) 파일 이름 하드 코딩(해당하는 날짜로 이름 붙이기)
 //            FileInputStream file = new FileInputStream("C:\\Users\\highj\\OneDrive\\바탕 화면\\baronic\\예약내역(20210110).xls"); // 집pc 경로
