@@ -20,9 +20,7 @@ public class ReservationService {
     }
 
     // 엑셀 예약 데이터 저장
-    public void insertReservationSchedule(String patient_name, int chart_Id, String todo, String dump, Date reservation_date, int position) throws Exception {
-//        Reservation reservation = new Reservation(patient_name, chart_id, todo, dump, reservation_date, position); // chart_id 는 fk로 설정
-        ReservationSaveRequestDto reservationSaveRequestDto = new ReservationSaveRequestDto(patient_name, chart_Id, todo, dump, reservation_date, position);
+    public void insertReservationSchedule(ReservationSaveRequestDto reservationSaveRequestDto) throws Exception {
         this.reservationMapper.insertReservationExcelData(reservationSaveRequestDto);
     }
 

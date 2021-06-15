@@ -2,6 +2,7 @@ package com.hospital.baronic.web;
 
 import com.hospital.baronic.domain.Reservation.Reservation;
 import com.hospital.baronic.service.ReservationService;
+import com.hospital.baronic.web.dto.ReservationSaveRequestDto;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -169,8 +170,9 @@ public class ReservationController {
                     System.out.println("chart_id : " + chart_id + ", patient_name : " + patient_name + ", todo : " + todo + ", dump : " +  dump + ", reservation_date : " +  dateTypeReservation_date);
                     System.out.println("===========================================================");
 
-//                    this.reservationService.insertReservationSchedule(chart_id, todo, dump, dateTypeReservation_date, position);
-                    this.reservationService.insertReservationSchedule(patient_name, chart_id, todo, dump, dateTypeReservation_date, position);
+                    ReservationSaveRequestDto reservationSaveRequestDto = new ReservationSaveRequestDto(patient_name, chart_id, todo, dump, dateTypeReservation_date, position);
+                    this.reservationService.insertReservationSchedule(reservationSaveRequestDto);
+                    // this.reservationService.insertReservationSchedule(patient_name, chart_id, todo, dump, dateTypeReservation_date, position);
 
                     position++;
                     if (!reservation_time_list.get(rowindex).equals(reservation_time_list.get(rowindex-1))){
