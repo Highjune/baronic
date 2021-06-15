@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class PatientService {
 
-    @Autowired
-    private PatientMapper patientMapper;
+    private final PatientMapper patientMapper;
 
+    public PatientService(PatientMapper patientMapper) {
+        this.patientMapper = patientMapper;
+    }
+
+    //엑셀 환자 데이터 저장
     public void insertPatientInfo(int chart_Id, String name) throws Exception {
         PatientSaveRequestDto patientSaveRequestDto = new PatientSaveRequestDto(chart_Id, name);
         patientMapper.insertPatientInfo(patientSaveRequestDto);

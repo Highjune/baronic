@@ -1,6 +1,8 @@
 package com.hospital.baronic.service;
 
 import com.hospital.baronic.domain.Reservation.Reservation;
+import com.hospital.baronic.mapper.ReservationMapper;
+import com.hospital.baronic.web.dto.ReservationSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +11,19 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ReservationService {
 
-    public void insertReservationSchedule(String patient_name, int chart_id, String todo, String dump, Date reservation_date, int position) {
-        Reservation reservation = new Reservation(patient_name, chart_id, todo, dump, reservation_date, position); // chart_id 는 fk로 설정
-//        this.reservationRepository.save(reservation);
-//        return reservation.getReservation_id();
+    private final ReservationMapper reservationMapper;
+
+    public ReservationService(ReservationMapper reservationMapper) {
+        this.reservationMapper = reservationMapper;
+    }
+
+    // 엑셀 예약 데이터 저장
+    public void insertReservationSchedule(String patient_name, int chart_Id, String todo, String dump, Date reservation_date, int position) throws Exception {
+//        Reservation reservation = new Reservation(patient_name, chart_id, todo, dump, reservation_date, position); // chart_id 는 fk로 설정
+        ReservationSaveRequestDto reservationSaveRequestDto = new ReservationSaveRequestDto(patient_name, chart_Id, todo, dump, reservation_date, position);
+        this.reservationMapper.insertReservationExcelData(reservationSaveRequestDto);
     }
 
     // 엑셀데이터에서 chart_id와 to do를 파싱하기 위한 함수

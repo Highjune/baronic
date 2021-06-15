@@ -97,7 +97,6 @@ public class PatientController {
                             System.out.println(rowindex + "번 행 : " + columnindex + "번 열 값은 : " + value);
                         }
                     } // 안 for문 끝. 2~3열
-
                         this.patientService.insertPatientInfo(chartId, name);
                 } else {
                     String row_null_error = "row = null";

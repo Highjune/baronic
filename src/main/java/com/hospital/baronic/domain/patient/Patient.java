@@ -9,10 +9,7 @@ import javax.persistence.*;
 @Getter
 public class Patient {
 
-    @Id // pk
     private int chart_Id;
-
-    @Column
     private String name;
 
     public Patient(int chartId, String name){
