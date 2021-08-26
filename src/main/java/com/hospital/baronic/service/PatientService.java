@@ -1,6 +1,7 @@
 package com.hospital.baronic.service;
 
 import com.hospital.baronic.mapper.PatientMapper;
+import com.hospital.baronic.web.dto.PatientResponseDto;
 import com.hospital.baronic.web.dto.PatientSaveRequestDto;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -9,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.util.List;
 
 @Service
 public class PatientService {
@@ -94,7 +96,7 @@ public class PatientService {
                     } // 안 for문 끝. 2~3열
 //                    this.patientService.insertPatientInfo(chart_Id, name);
                     PatientSaveRequestDto patientSaveRequestDto = new PatientSaveRequestDto(chart_Id, name);
-                    patientMapper.insertPatientInfo(patientSaveRequestDto);
+                    this.patientMapper.insertPatientInfo(patientSaveRequestDto);
 
                 } else {
                     String row_null_error = "row = null";
@@ -109,5 +111,9 @@ public class PatientService {
             ans = "failure";
             return ans;
         }
+    }
+
+    public List<PatientResponseDto> getAllPatientList() throws Exception {
+        return this.patientMapper.getAllPatientList();
     }
 }

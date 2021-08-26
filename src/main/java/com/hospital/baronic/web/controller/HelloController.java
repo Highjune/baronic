@@ -1,4 +1,4 @@
-package com.hospital.baronic.web;
+package com.hospital.baronic.web.controller;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.io.FileInputStream;
+import java.util.Stack;
 
-// 프로젝트가 잘 띄워지는지 확인용 클래스
-// @RestController를 통해 일반컨트롤러 -> JSON형식 데이터로 반환 가능한 컨트롤러
+// 프로젝트가 잘 띄워지는지 확인용 컨트롤러
 @RestController
 public class HelloController {
 
@@ -21,5 +21,6 @@ public class HelloController {
     public String hello(){
         return "hello youngbin";
     }
+
 
 }

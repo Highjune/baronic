@@ -1,4 +1,4 @@
-package com.hospital.baronic.domain.Reservation;
+package com.hospital.baronic.domain.reservation;
 
 import lombok.*;
 

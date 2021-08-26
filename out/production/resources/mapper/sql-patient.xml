@@ -12,4 +12,12 @@
               , #{name}
               )
     </insert>
+
+    <select id = "getAllPatientList" resultType="com.hospital.baronic.web.dto.PatientResponseDto">
+        SELECT `chart_id`
+            , `name`
+            , `insert_time`
+            , `update_time`
+        FROM baronic_db.patient
+    </select>
 </mapper>

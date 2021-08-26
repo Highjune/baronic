@@ -28,7 +28,7 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    @ConfigurationProperties(prefix="mybatis.configuration")
+    @ConfigurationProperties(prefix="mybatis.configuration") // application.properties의 설정 중 마이바티스 관련된 설정 가져옴(원래는 카멜 케이스 설정)
     public org.apache.ibatis.session.Configuration mybatisConfig() {
         return new org.apache.ibatis.session.Configuration();
     }
