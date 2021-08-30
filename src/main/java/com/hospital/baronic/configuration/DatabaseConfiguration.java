@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySource;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:/application.properties") // PropertySource 추가해서 다른 설정 파일도 사용할 수 있다.
+@PropertySource("classpath:/application-local.properties") // PropertySource 추가해서 다른 설정 파일도 사용할 수 있다.
 public class DatabaseConfiguration {
 
     @Autowired

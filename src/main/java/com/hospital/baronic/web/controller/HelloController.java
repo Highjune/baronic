@@ -22,5 +22,4 @@ public class HelloController {
         return "hello youngbin";
     }
 
-
 }

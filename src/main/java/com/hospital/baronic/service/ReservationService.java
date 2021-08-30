@@ -2,6 +2,7 @@ package com.hospital.baronic.service;
 
 import com.hospital.baronic.domain.reservation.Reservation;
 import com.hospital.baronic.mapper.ReservationMapper;
+import com.hospital.baronic.web.dto.ReservationResponseDto;
 import com.hospital.baronic.web.dto.ReservationSaveRequestDto;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -14,6 +15,7 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReservationService {
@@ -291,7 +293,10 @@ public class ReservationService {
 //                .build();
 
         return inputReservationData;
+    }
 
+    public List<ReservationResponseDto> getReservationList() throws Exception {
+        return this.reservationMapper.getReservationList();
     }
 }
 

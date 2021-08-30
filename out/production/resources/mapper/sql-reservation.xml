@@ -21,4 +21,19 @@
               )
     </insert>
 
+    <select id = "getReservationList" resultType="com.hospital.baronic.web.dto.ReservationResponseDto">
+        SELECT reservation_id
+            , patient_name
+            , chart_id
+            , todo
+            , reservation_date
+            , is_valid
+            , is_modifying
+            , dump
+            , `position`
+            , insert_time
+            , update_time
+        FROM baronic_db.reservation
+    </select>
+
 </mapper>
