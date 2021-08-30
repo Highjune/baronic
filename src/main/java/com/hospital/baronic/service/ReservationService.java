@@ -49,70 +49,15 @@ public class ReservationService {
 
             XSSFRow firstRow = sheet.getRow(0);
             int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 총 8개)
+            int rows = sheet.getPhysicalNumberOfRows();
 
             String reservation_date = ""; // reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // 1) 날짜(day, "01/10일요일", "01/11(월요일)", ...) 먼저 list에 담기
-            ArrayList<String> reservation_day_list = new ArrayList<String>(); // "01/10(일요일)", "01/11(월요일)", ...
-            for (int i = 1 ; i <= firstRowLength ; i++) { // 열의 총 갯수
-//                XSSFRow row = sheet.getRow(0); // 0행만 먼저 읽음
-                String reservation_day = "";
-                if (firstRow != null) {
-                    XSSFCell cell = firstRow.getCell(i); // 첫번째 cell("시간") 제외라서 i=1부터
-                    if (cell == null) {
-                        continue;
-                    } else {
-                        switch(cell.getCellType()) {
-                            case XSSFCell.CELL_TYPE_FORMULA:
-                                reservation_day = cell.getCellFormula(); break;
-                            case XSSFCell.CELL_TYPE_NUMERIC:
-                                reservation_day = cell.getNumericCellValue()+""; break;
-                            case XSSFCell.CELL_TYPE_STRING:
-                                reservation_day = cell.getStringCellValue()+""; break;
-                            case XSSFCell.CELL_TYPE_BLANK:
-                                reservation_day = cell.getBooleanCellValue()+""; break;
-                            case XSSFCell.CELL_TYPE_ERROR:
-                                reservation_day = cell.getErrorCellValue()+""; break;
-                        }
-                    }
-                }
-                reservation_day_list.add(reservation_day); // 담기
-            } // 첫 행(날짜들)만 읽는 for문 끝
+            ArrayList<String> reservation_day_list = ReservationService.readDayFromExcelData(firstRow); // "01/10(일요일)", "01/11(월요일)", ...
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // 2) 시간(time, "오전 10:00") list에 담기
-            ArrayList<String> reservation_time_list = new ArrayList<String>();
-
-            int rows = sheet.getPhysicalNumberOfRows();
-            for(int i = 1; i < rows ; i++){
-                XSSFRow row = sheet.getRow(i);
-                XSSFCell cell = row.getCell(0);
-
-                String reservation_time = "";
-                if (cell == null){
-                    continue;
-                } else {
-                    switch (cell.getCellType()) {
-                        case XSSFCell.CELL_TYPE_FORMULA:
-                            reservation_time = cell.getCellFormula();
-                            break;
-                        case XSSFCell.CELL_TYPE_NUMERIC:
-                            reservation_time = cell.getNumericCellValue() + "";
-                            break;
-                        case XSSFCell.CELL_TYPE_STRING:
-                            reservation_time = cell.getStringCellValue() + "";
-                            break;
-                        case XSSFCell.CELL_TYPE_BLANK:
-                            reservation_time = cell.getBooleanCellValue() + "";
-                            break;
-                        case XSSFCell.CELL_TYPE_ERROR:
-                            reservation_time = cell.getErrorCellValue() + "";
-                            break;
-                    }
-                }
-                reservation_time_list.add(reservation_time); // 담기
-            }
+            ArrayList<String> reservation_time_list = ReservationService.readTimeFromExcelData(sheet);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // 3) DB입력. 1)+2) 로 날짜+시간 만들어서 content랑 같이 DB 삽입
@@ -293,6 +238,76 @@ public class ReservationService {
 //                .build();
 
         return inputReservationData;
+    }
+
+    public static ArrayList<String> readDayFromExcelData(XSSFRow firstRow) throws Exception {
+        ArrayList<String> reservation_day_list = new ArrayList<String>();
+
+        int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 총 8개)
+
+        for (int i = 1 ; i <= firstRowLength ; i++) { // 열의 총 갯수
+//                XSSFRow row = sheet.getRow(0); // 0행만 먼저 읽음
+            String reservation_day = "";
+            if (firstRow != null) {
+                XSSFCell cell = firstRow.getCell(i); // 첫번째 cell("시간") 제외라서 i=1부터
+                if (cell == null) {
+                    continue;
+                } else {
+                    switch(cell.getCellType()) {
+                        case XSSFCell.CELL_TYPE_FORMULA:
+                            reservation_day = cell.getCellFormula(); break;
+                        case XSSFCell.CELL_TYPE_NUMERIC:
+                            reservation_day = cell.getNumericCellValue()+""; break;
+                        case XSSFCell.CELL_TYPE_STRING:
+                            reservation_day = cell.getStringCellValue()+""; break;
+                        case XSSFCell.CELL_TYPE_BLANK:
+                            reservation_day = cell.getBooleanCellValue()+""; break;
+                        case XSSFCell.CELL_TYPE_ERROR:
+                            reservation_day = cell.getErrorCellValue()+""; break;
+                    }
+                }
+            }
+            reservation_day_list.add(reservation_day); // 담기
+        }
+        // 첫 행(날짜들)만 읽는 for문 끝
+        return reservation_day_list;
+    }
+
+    public static ArrayList<String> readTimeFromExcelData(XSSFSheet sheet) throws Exception {
+
+        ArrayList<String> reservation_time_list = new ArrayList<String>();
+
+        int rows = sheet.getPhysicalNumberOfRows();
+        for(int i = 1; i < rows ; i++){
+            XSSFRow row = sheet.getRow(i);
+            XSSFCell cell = row.getCell(0);
+
+            String reservation_time = "";
+            if (cell == null){
+                continue;
+            } else {
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_FORMULA:
+                        reservation_time = cell.getCellFormula();
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
+                        reservation_time = cell.getNumericCellValue() + "";
+                        break;
+                    case XSSFCell.CELL_TYPE_STRING:
+                        reservation_time = cell.getStringCellValue() + "";
+                        break;
+                    case XSSFCell.CELL_TYPE_BLANK:
+                        reservation_time = cell.getBooleanCellValue() + "";
+                        break;
+                    case XSSFCell.CELL_TYPE_ERROR:
+                        reservation_time = cell.getErrorCellValue() + "";
+                        break;
+                }
+            }
+            reservation_time_list.add(reservation_time); // 담기
+        }
+
+        return reservation_time_list;
     }
 
     public List<ReservationResponseDto> getReservationList() throws Exception {
