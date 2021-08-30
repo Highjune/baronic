@@ -45,7 +45,7 @@ public class ReservationService {
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
             int columnindex = 0;
-            XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0), 만약 각 시트를 읽기 위해서는 for문으로 더.
+            XSSFSheet sheet = workbook.getSheetAt(0); // 시트 수 (첫번째에만 존재하므로 0), 만약 여러 시트를 읽기 위해서는 for문으로.
 
             XSSFRow firstRow = sheet.getRow(0);
             int firstRowLength = firstRow.getPhysicalNumberOfCells(); // 열의 총 갯수(A~H, 총 8개)
