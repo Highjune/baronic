@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hospital.baronic.mapper.PatientMapper">
+    <insert id = "insertPatientInfo" parameterType="com.hospital.baronic.web.dto.PatientSaveRequestDto">
+        INSERT INTO baronic_db.patient(
+                                        chart_Id
+                                      , `name`
+        )
+        VALUES(
+                #{chart_Id}
+              , #{name}
+              )
+    </insert>
+
+    <select id = "getAllPatientList" resultType="com.hospital.baronic.web.dto.PatientResponseDto">
+        SELECT `chart_id`
+            , `name`
+            , `insert_time`
+            , `update_time`
+        FROM baronic_db.patient
+    </select>
+</mapper>

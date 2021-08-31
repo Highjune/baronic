@@ -13,7 +13,7 @@ buildscript {
     }
 }
 
-//밑의 4가지는 자바와 스프링 부트를 사용하기 위해 필수 플러그인
+// 밑의 4가지는 자바와 스프링 부트를 사용하기 위해 필수 플러그인. 항상 추가
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -23,22 +23,33 @@ group 'com.hospital'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
-//각종 의존성(라이브러리)들을 어떤 원격 저장소에서 받을지 정하는 것
+//각종 의존성(라이브러리)들을 어떤 원격 저장소에서 받을지 정하는 것. google() 도 추가할 수 있음
 repositories {
     mavenCentral()
     jcenter()
 }
 
-//프로젝트 개발에 필요한 의존성들을 선언하는 곳.
-//버전명시 하면 안됨. 위의 전역변수로 설정한 SpringBootVersion을 맞춰간다.(각 라이브러리들의 버전 관리가 한 곳에 집중되고, 버전 충돌 문제도 해결됨)
-//필요한 것들 의존성 찾아서 추가하면 됨
+// 버전명시 하면 안됨. 위의 전역변수로 설정한 SpringBootVersion을 맞춰간다.(각 라이브러리들의 버전 관리가 한 곳에 집중되고, 버전 충돌 문제도 해결됨)
+// poi는 버전명시 하면 안되는데 게속 에러나서...일단 버전도 명시함
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+    compile('mysql:mysql-connector-java')
     compile('com.h2database:h2')
     compile('org.mariadb.jdbc:mariadb-java-client')
     compile('org.springframework.session:spring-session-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.apache.poi:poi:3.7')
+    compile('org.apache.poi:poi-ooxml:3.7')
+    annotationProcessor ('org.springframework.boot:spring-boot-configuration-processor')
+    annotationProcessor ('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
+
+}
+
+test {
+    useJUnitPlatform()
 }
