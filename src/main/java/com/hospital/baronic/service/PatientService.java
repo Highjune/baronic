@@ -1,6 +1,6 @@
 package com.hospital.baronic.service;
 
-import com.hospital.baronic.mapper.PatientMapper;
+import com.hospital.baronic.domain.patient.PatientMapper;
 import com.hospital.baronic.web.dto.PatientResponseDto;
 import com.hospital.baronic.web.dto.PatientSaveRequestDto;
 import org.apache.poi.xssf.usermodel.XSSFCell;

@@ -19,7 +19,7 @@ public class Reservation {
     private String dump;
     private int position;
 
-    @Builder
+//    @Builder
     public Reservation(String patient_name, int chart_id, String todo, String dump, Date reservation_date, int position){
         this.patient_name = patient_name;
         this.chart_id = chart_id;
@@ -29,7 +29,7 @@ public class Reservation {
         this.position = position;
     }
 
-    @Builder
+//    @Builder
     public Reservation(String patient_name, int chart_id, String todo, String dump) {
         this.patient_name = patient_name;
         this.chart_id = chart_id;
@@ -37,7 +37,7 @@ public class Reservation {
         this.dump = dump;
     }
 
-    @Builder
+//    @Builder
     public Reservation(int chart_id, String todo, String dump) {
         this.chart_id = chart_id;
         this.todo = todo;

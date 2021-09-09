@@ -23,8 +23,8 @@ public class ReservationController {
         return ans;
     }
 
-    @GetMapping("/getReservationList")
-    public List<ReservationResponseDto> getReservationList() throws Exception {
-        return this.reservationService.getReservationList();
+    @GetMapping("/getAllReservationList")
+    public List<ReservationResponseDto> getAllReservationList() throws Exception {
+        return this.reservationService.getAllReservationList();
     }
 }
