@@ -3,6 +3,8 @@ package com.hospital.baronic.web.controller;
 import com.hospital.baronic.service.ReservationService;
 import com.hospital.baronic.web.dto.ReservationResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -16,14 +18,16 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/insertReservationExcelData") // column 먼저 읽기(세로로)
+//    @GetMapping("/insertReservationExcelData")
+    @RequestMapping(value = "/insertReservationExcelData", method={RequestMethod.GET}) // column 먼저 읽기(세로로)
     public String insertReservationExcelData() {
         String ans = "";
         ans = this.reservationService.parseReservationExcelData();
         return ans;
     }
 
-    @GetMapping("/getAllReservationList")
+//    @GetMapping("/getAllReservationList")
+    @RequestMapping(value = "/getAllReservationList", method={RequestMethod.GET})
     public List<ReservationResponseDto> getAllReservationList() throws Exception {
         return this.reservationService.getAllReservationList();
     }
