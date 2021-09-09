@@ -1,7 +1,7 @@
 package com.hospital.baronic.service;
 
 import com.hospital.baronic.domain.reservation.Reservation;
-import com.hospital.baronic.mapper.ReservationMapper;
+import com.hospital.baronic.domain.reservation.ReservationMapper;
 import com.hospital.baronic.web.dto.ReservationResponseDto;
 import com.hospital.baronic.web.dto.ReservationSaveRequestDto;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -53,7 +53,7 @@ public class ReservationService {
 
             String reservation_date = ""; // reservation_date = day_arr + time_arr (ex. "01/10(일요일)" + "오전 10:00")
 
-            // 1) 날짜(day, "01/10일요일", "01/11(월요일)", ...) 먼저 list에 담기
+            // 1) 날짜(day, "01/10일요일", "01/11(월요일)", ...) list에 담기
             ArrayList<String> reservation_day_list = ReservationService.readDayFromExcelData(firstRow); // "01/10(일요일)", "01/11(월요일)", ...
 
             // 2) 시간(time, "오전 10:00") list에 담기
@@ -63,7 +63,7 @@ public class ReservationService {
             // 3) DB입력. 1)+2) 로 날짜+시간 만들어서 content랑 같이 DB 삽입
 
             // 바깥 for문 시작(열)
-            for (columnindex = 1; columnindex <= firstRowLength; columnindex++) {
+            for (columnindex = 1; columnindex <= firstRowLength ; columnindex++) {
                 int rowindex = 1;
 
                 String patient_name = "";
@@ -103,9 +103,9 @@ public class ReservationService {
                         System.out.println(columnindex + "번 열 " + rowindex + "번 행 값은 : " + reservation_cell_data);
                     }
 
-                    reservation_date = reservation_day_list.get(columnindex-1) + " " + reservation_time_list.get(rowindex-1); // 01/10(일요일) 오전10:00
+                    reservation_date = reservation_day_list.get(columnindex-1) + " " + reservation_time_list.get(rowindex-1); // 문자열 타입 "01/10(일요일) 오전10:00"
                     SimpleDateFormat noYearDateFormat = new SimpleDateFormat("MM/dd(E) ahh:mm");
-                    Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date);
+                    Date dateTypeReservation_date  = noYearDateFormat.parse(reservation_date); // Date 타입 "01/10(일요일) 오전10:00"
 
                     // 엑셀데이터에서 chart_id와 to do를 파싱하기 위한 함수
                     Reservation inputReservationData = ReservationService.parsingReservationExcelDumpData(reservation_cell_data);
@@ -310,8 +310,8 @@ public class ReservationService {
         return reservation_time_list;
     }
 
-    public List<ReservationResponseDto> getReservationList() throws Exception {
-        return this.reservationMapper.getReservationList();
+    public List<ReservationResponseDto> getAllReservationList() throws Exception {
+        return this.reservationMapper.getAllReservationList();
     }
 }
 

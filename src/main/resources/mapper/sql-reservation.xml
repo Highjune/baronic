@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hospital.baronic.mapper.ReservationMapper">
+<mapper namespace="com.hospital.baronic.domain.reservation.ReservationMapper">
 
     <insert id = "insertReservationExcelData" parameterType="com.hospital.baronic.web.dto.ReservationSaveRequestDto">
         INSERT INTO baronic_db.reservation(
@@ -22,16 +22,19 @@
               )
     </insert>
 
-    <select id = "getReservationList" resultType="com.hospital.baronic.web.dto.ReservationResponseDto">
+
+    <select id = "getAllReservationList" resultType="com.hospital.baronic.web.dto.ReservationResponseDto">
         SELECT reservation_id
             , patient_name
             , chart_id
             , todo
             , reservation_date
+            , reservation_date_to
             , is_valid
             , is_modifying
             , dump
             , `position`
+            , owner
             , insert_time
             , update_time
         FROM baronic_db.reservation

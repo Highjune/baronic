@@ -14,6 +14,7 @@ public class ReservationSaveRequestDto {
     private int chart_Id;
     private String todo;
     private Date reservation_date;
+    private Date reservation_date_to;
     private int is_valid;
     private int is_modifying;
     private String dump;
@@ -28,4 +29,3 @@ public class ReservationSaveRequestDto {
         this.position = position;
     }
 }
-

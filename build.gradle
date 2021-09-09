@@ -51,5 +51,6 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    // useJUnitPlatform()
+    exclude '**/*' // 빌드시 테스트 제외
 }

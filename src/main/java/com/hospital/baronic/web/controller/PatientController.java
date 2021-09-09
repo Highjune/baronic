@@ -16,14 +16,16 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping("/insertPatientInfo")
+//    @GetMapping("/insertPatientInfo")
+    @RequestMapping(value = "/insertPatientInfo", method = {RequestMethod.GET})
     public String insertPatientInfo() {
         String ans = "";
         ans = this.patientService.insertPatientInfo();
         return ans;
     }
 
-    @GetMapping("/getAllPatientList")
+//    @GetMapping("/getAllPatientList")
+    @RequestMapping(value = "/getAllPatientList", method = {RequestMethod.GET})
     public List<PatientResponseDto> getAllPatientList() throws Exception {
         return this.patientService.getAllPatientList();
     }
