@@ -11,5 +11,6 @@ public class User {
     int id;
     String passwd;
     String salt;
+    String phone_num;
     int is_valid;
 }
