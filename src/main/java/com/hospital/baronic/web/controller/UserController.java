@@ -22,14 +22,13 @@ public class UserController {
 
     // 회원가입
     @RequestMapping(value = "/register/create", method={RequestMethod.POST})
-    public String userRegister (@RequestBody UserDto userDto) {
+    public String userRegister (@RequestBody UserDto userDto) throws Exception {
         String res = this.userService.userRegister(userDto);
         if (res.equalsIgnoreCase("success")) {
             return "success";
         } else {
             return "fail";
         }
-
     }
 
 }
