@@ -7,5 +7,6 @@ public class UserDto {
     String id;
     String passwd;
     String salt;
+    String phone_num;
     int is_valid;
 }

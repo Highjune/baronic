@@ -10,7 +10,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    void registerUser(ReservationSaveRequestDto reservationSaveRequestDto) throws Exception;
+    void registerUser(User user) throws Exception;
 
     UserDto isAlreadyID(String id) throws Exception;
+
+    String get_SALT(String id) throws Exception;
 }
