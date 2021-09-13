@@ -51,11 +51,11 @@ public class UserController {
         boolean loginCheck = this.userService.login(userDto);
         if (loginCheck == true) {
             // session
-            String session_value = UUID.randomUUID().toString();
-            params.put("session_value", session_value);
+            String sessionId = UUID.randomUUID().toString();
+            params.put("sessionId", sessionId);
             this.userService.updateSessionValue(params);
 
-            Cookie cookie = new Cookie("session_value", session_value);
+            Cookie cookie = new Cookie("sessionId", sessionId);
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
 
