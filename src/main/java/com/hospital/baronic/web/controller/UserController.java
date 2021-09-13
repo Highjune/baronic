@@ -42,19 +42,20 @@ public class UserController {
 
         HttpSession session = request.getSession();
 
-        uuid = UUID.randomUUID().toString();// 전 세계에서 유일한 값이 나옴.
+        //uuid = UUID.randomUUID().toString();// 전 세계에서 유일한 값이 나옴.
 
-        User loginUser = this.userService.login(userDto);
-        if (res.equalsIgnoreCase("success")) {
-            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginUser);
+        //User loginUser = this.userService.login(userDto);
+//        if (res.equalsIgnoreCase("success")) {
+//            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginUser);
+//
+//            return "success";
+//
+//
+//
+//        } else {
+//            return res;
+//        }
+//    }
 
-            return "success";
-
-
-
-        } else {
-            return res;
-        }
-    }
-
+        return null;
 }
