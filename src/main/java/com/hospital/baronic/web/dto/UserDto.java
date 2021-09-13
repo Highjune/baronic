@@ -8,5 +8,6 @@ public class UserDto {
     String passwd;
     String salt;
     String phone_num;
+    String sessionId;
     int is_valid;
 }

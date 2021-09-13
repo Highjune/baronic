@@ -13,6 +13,7 @@ public class User {
     String passwd;
     String salt;
     String phone_num;
+    String sessionId;
     int is_valid;
 
     public User(String id, String passwd, String salt, String phone_num) {

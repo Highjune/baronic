@@ -48,7 +48,26 @@
         UPDATE baronic_db.admin_user
         SET sessionId = #{sessionId}
         WHERE 1=1
-        AND id = #{id};
+        AND id = #{id}
+    </update>
+
+    <select id = "checkSessionId" parameterType="String" resultType="com.hospital.baronic.web.dto.UserDto">
+        SELECT id
+             , passwd
+             , salt
+             , phone_num
+             , is_valid
+             , sessionId
+        FROM baronic_db.admin_user
+        WHERE 1=1
+        AND sessionId = #{sessionId}
+    </select>
+
+    <update id = "invalidSession" parameterType="String">
+        UPDATE baronic_db.admin_user
+        SET sessionId = NULL
+        WHERE 1=1
+        AND sessionId = #{sessionId}
     </update>
 
 </mapper>

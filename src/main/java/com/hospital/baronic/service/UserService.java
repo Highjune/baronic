@@ -56,6 +56,30 @@ public class UserService {
         }
     }
 
+    public boolean checkSessionId(String sessionId) throws Exception {
+        UserDto userDto = this.userMapper.checkSessionId(sessionId);
+        if (userDto == null) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    public boolean logout(String sessionId) throws Exception {
+        boolean isSessionIdValid = this.checkSessionId(sessionId);
+
+        if (isSessionIdValid == false) {
+            return false;
+        } else {
+            // invalid session, logout success
+            this.userMapper.invalidSession(sessionId);
+            return true;
+        }
+
+    }
+
+
     public boolean login (UserDto userDto) throws Exception {
         String id = userDto.getId();
         UserDto alreadyUser = this.userMapper.isAlreadyID(id);

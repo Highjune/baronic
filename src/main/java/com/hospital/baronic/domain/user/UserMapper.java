@@ -20,4 +20,8 @@ public interface UserMapper {
     String get_SALT(String id) throws Exception;
 
     void updateSessionValue(Map<String, Object> params) throws Exception;
+
+    UserDto checkSessionId(String sessionId) throws Exception;
+
+    void invalidSession(String invalidSession) throws Exception;
 }

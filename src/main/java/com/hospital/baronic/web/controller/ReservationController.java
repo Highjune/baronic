@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RequestMapping(value = "/api/v1")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -17,6 +17,7 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    // excel data -> insert DB
     @RequestMapping(value = "/insertReservationExcelData", method={RequestMethod.GET}) // column 먼저 읽기(세로로)
     public String insertReservationExcelData() {
         String ans = "";
@@ -24,8 +25,16 @@ public class ReservationController {
         return ans;
     }
 
+    // api test
     @RequestMapping(value = "/getAllReservationList", method={RequestMethod.GET})
     public List<ReservationResponseDto> getAllReservationList() throws Exception {
         return this.reservationService.getAllReservationList();
     }
+
+    @RequestMapping(value = "/reserve/create", method={RequestMethod.GET})
+    public String reserveCreate() throws Exception {
+
+    }
+
+
 }

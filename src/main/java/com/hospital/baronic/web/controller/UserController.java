@@ -8,6 +8,7 @@ import com.hospital.baronic.web.SessionConstants;
 import com.hospital.baronic.web.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,6 @@ public class UserController {
 
         boolean loginCheck = this.userService.login(userDto);
         if (loginCheck == true) {
-            // session
             String sessionId = UUID.randomUUID().toString();
             params.put("sessionId", sessionId);
             this.userService.updateSessionValue(params);
@@ -64,5 +64,28 @@ public class UserController {
             return "login fail";
         }
     }
+
+    @RequestMapping(value = "logout", method = {RequestMethod.POST})
+    public String logout(HttpServletRequest request) throws Exception {
+        String sessionId = "";
+
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+//              System.out.println(cookie.getName() + ": " + cookie.getValue());
+                if (cookie.getName().equals("sessionId")) {
+                    sessionId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+//        boolean isSessionIdValid = this.userService.checkSessionId(sessionId);
+        boolean result = this.userService.logout(sessionId);
+        if (result == true) {
+            return "logout success";
+        } else {
+            return "logoug failure";
+        }
+    }
+
 
 }
