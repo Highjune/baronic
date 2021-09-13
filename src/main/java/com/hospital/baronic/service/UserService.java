@@ -79,7 +79,6 @@ public class UserService {
 
     }
 
-
     public boolean login (UserDto userDto) throws Exception {
         String id = userDto.getId();
         UserDto alreadyUser = this.userMapper.isAlreadyID(id);
@@ -87,7 +86,6 @@ public class UserService {
 //            return "No user";
             return false;
         }
-
         String salt = this.get_SALT(userDto);
         String hashPasswd = this.Hashing(userDto.getPasswd().getBytes(), salt);
 
