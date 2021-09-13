@@ -32,10 +32,15 @@ public class UserService {
 
     // register
     public String userRegister (UserDto userDto) throws Exception {
-        boolean chk = this.isAlreadyID(userDto); // check already id?
-        if (chk == true) {
+        boolean idChk = this.isAlreadyID(userDto); // check already id?
+        if (idChk == true) {
             return "failure, there is already id";
         }
+        boolean pNumChk = this.isAlreadyPNum(userDto);
+        if (pNumChk == true) {
+            return "failure, there is already phone_num";
+        }
+
         try {
             String salt = this.getSALT();
             byte[] bytePasswd = userDto.getPasswd().getBytes();
@@ -49,11 +54,22 @@ public class UserService {
         }
     }
 
-    // check is there already id (when register)
+    public String login (UserDto userDto) throws Exception {
+        //
+    }
+
+    // check already id (when register)
     private boolean isAlreadyID(UserDto userDto) throws Exception {
         String id = userDto.getId();
         UserDto alreadyUser = this.userMapper.isAlreadyID(id);
         return Optional.ofNullable(alreadyUser).isPresent();
+    }
+
+    // check already phone Number (when register)
+    private boolean isAlreadyPNum(UserDto userDto) throws Exception {
+        String phone_num = userDto.getPhone_num();
+        List<UserDto> isAlreadyPNum = this.userMapper.isAlreadyPNum(phone_num);
+        return Optional.ofNullable(isAlreadyPNum).isPresent();
     }
 
     // find salt value of id (when login)

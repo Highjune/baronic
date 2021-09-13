@@ -14,5 +14,7 @@ public interface UserMapper {
 
     UserDto isAlreadyID(String id) throws Exception;
 
+    List<UserDto> isAlreadyPNum(String phone_num) throws Exception;
+
     String get_SALT(String id) throws Exception;
 }

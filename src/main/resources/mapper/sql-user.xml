@@ -14,6 +14,17 @@
         AND id = #{id}
     </select>
 
+    <select id = "isAlreadyPNum" parameterType="String" resultType="com.hospital.baronic.web.dto.UserDto">
+        SELECT `id`
+             , `passwd`
+             , `salt`
+             , `is_valid`
+             , `phone_num`
+        FROM baronic_db.admin_user
+        WHERE 1=1
+          AND phone_num = #{phone_num}
+    </select>
+
     <select id = "get_SALT" parameterType="String" resultType="String">
         SELECT `salt`
         FROM baronic_db.admin_user
