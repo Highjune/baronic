@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -54,9 +55,25 @@ public class UserService {
         }
     }
 
-    public String login (UserDto userDto) throws Exception {
-        //
-        return null;
+    public boolean login (UserDto userDto) throws Exception {
+        String id = userDto.getId();
+        UserDto alreadyUser = this.userMapper.isAlreadyID(id);
+        if (alreadyUser == null) { // if user doesn't exist
+//            return "No user";
+            return false;
+        }
+
+        String salt = this.get_SALT(userDto);
+        String hashPasswd = this.Hashing(userDto.getPasswd().getBytes(), salt);
+
+        if (alreadyUser.getPasswd().equals(hashPasswd)) {
+//            return "login success";
+            return true;
+        } else {
+//            return "login fail";
+            return false;
+        }
+
     }
 
     // check already id (when register)
@@ -70,7 +87,11 @@ public class UserService {
     private boolean isAlreadyPNum(UserDto userDto) throws Exception {
         String phone_num = userDto.getPhone_num();
         List<UserDto> isAlreadyPNum = this.userMapper.isAlreadyPNum(phone_num);
-        return Optional.ofNullable(isAlreadyPNum).isPresent();
+        if (isAlreadyPNum.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // find salt value of id (when login)
@@ -111,6 +132,11 @@ public class UserService {
         }
 
         return Byte_to_String(password);
+    }
+
+    public static void main(String[] args) {
+        String uuid = UUID.randomUUID().toString();
+        System.out.println(uuid);
     }
 
 }

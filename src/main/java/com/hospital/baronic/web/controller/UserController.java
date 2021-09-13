@@ -25,8 +25,8 @@ public class UserController {
     }
 
     // register
-    @RequestMapping(value = "/register/create", method={RequestMethod.POST})
-    public String userRegister (@RequestBody UserDto userDto) throws Exception {
+    @RequestMapping(value = "/register/create", method = {RequestMethod.POST})
+    public String userRegister(@RequestBody UserDto userDto) throws Exception {
         String res = this.userService.userRegister(userDto);
         if (res.equalsIgnoreCase("success")) {
             return "success";
@@ -36,26 +36,21 @@ public class UserController {
     }
 
     // login
-    @RequestMapping(value = "/login", method={RequestMethod.POST})
-    public String login (@RequestBody UserDto userDto
-    , HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    public String login(@RequestBody UserDto userDto
+            , HttpServletRequest request) throws Exception {
 
         HttpSession session = request.getSession();
 
         //uuid = UUID.randomUUID().toString();// 전 세계에서 유일한 값이 나옴.
 
-        //User loginUser = this.userService.login(userDto);
-//        if (res.equalsIgnoreCase("success")) {
-//            session.setAttribute(SessionConstants.LOGIN_MEMBER, loginUser);
-//
-//            return "success";
-//
-//
-//
-//        } else {
-//            return res;
-//        }
-//    }
+        boolean loginCheck = this.userService.login(userDto);
+        if (loginCheck == true) {
+            return "login success";
 
-        return null;
+        } else {
+            return "login fail";
+        }
+    }
+
 }
