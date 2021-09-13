@@ -44,4 +44,11 @@
               )
     </insert>
 
+    <update id = "updateSessionValue" parameterType="HashMap">
+        UPDATE baronic_db.admin_user
+        SET session_value = #{session_value}
+        WHERE 1=1
+        AND id = #{id};
+    </update>
+
 </mapper>

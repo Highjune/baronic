@@ -6,6 +6,7 @@ import com.hospital.baronic.web.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -17,4 +18,6 @@ public interface UserMapper {
     List<UserDto> isAlreadyPNum(String phone_num) throws Exception;
 
     String get_SALT(String id) throws Exception;
+
+    void updateSessionValue(Map<String, Object> params) throws Exception;
 }

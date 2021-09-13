@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -73,7 +74,10 @@ public class UserService {
 //            return "login fail";
             return false;
         }
+    }
 
+    public void updateSessionValue(Map<String, Object> params) throws Exception {
+        this.userMapper.updateSessionValue(params);
     }
 
     // check already id (when register)
@@ -132,11 +136,6 @@ public class UserService {
         }
 
         return Byte_to_String(password);
-    }
-
-    public static void main(String[] args) {
-        String uuid = UUID.randomUUID().toString();
-        System.out.println(uuid);
     }
 
 }

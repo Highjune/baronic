@@ -9,10 +9,13 @@ import com.hospital.baronic.web.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -38,16 +41,25 @@ public class UserController {
     // login
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
     public String login(@RequestBody UserDto userDto
-            , HttpServletRequest request) throws Exception {
-
+            , HttpServletRequest request
+            , HttpServletResponse response) throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        String id = userDto.getId();
+        params.put("id", id);
         HttpSession session = request.getSession();
-
-        //uuid = UUID.randomUUID().toString();// 전 세계에서 유일한 값이 나옴.
 
         boolean loginCheck = this.userService.login(userDto);
         if (loginCheck == true) {
-            return "login success";
+            // session
+            String session_value = UUID.randomUUID().toString();
+            params.put("session_value", session_value);
+            this.userService.updateSessionValue(params);
 
+            Cookie cookie = new Cookie("session_value", session_value);
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+
+            return "login success";
         } else {
             return "login fail";
         }
