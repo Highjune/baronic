@@ -16,4 +16,6 @@ public interface ReservationMapper {
     void insertReservationExcelData(ReservationSaveRequestDto reservationSaveRequestDto) throws Exception;
 
     List<ReservationResponseDto> getAllReservationList() throws Exception;
+
+    int reserveCreate(Reservation reservation) throws Exception;
 }

@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.Date;
 
 @NoArgsConstructor
-@Getter
+@Data
 @AllArgsConstructor
 public class Reservation {
 
@@ -14,10 +14,12 @@ public class Reservation {
     private int chart_id; // 나중에 fk 처리하기
     private String todo;
     private Date reservation_date;
+    private Date reservation_date_to;
     private int is_valid; // 0(invalid), 1(valid)
     private int is_modifying;
     private String dump;
     private int position;
+    private String owner;
 
 //    @Builder
     public Reservation(String patient_name, int chart_id, String todo, String dump, Date reservation_date, int position){

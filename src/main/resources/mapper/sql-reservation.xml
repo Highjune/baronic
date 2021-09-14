@@ -40,4 +40,21 @@
         FROM baronic_db.reservation
     </select>
 
+    <insert id = "reserveCreate" parameterType="com.hospital.baronic.domain.reservation.Reservation" useGeneratedKeys="true" keyProperty="reservation_id" >
+        INSERT INTO baronic_db.reservation(
+                                            patient_name
+                                          , chart_id
+                                          , todo
+                                          , reservation_date_to
+                                          , owner
+        )
+        VALUES(
+                  #{patient_name}
+              , #{chart_id}
+              , #{todo}
+              , #{reservation_date_to}
+              , #{owner}
+              )
+    </insert>
+
 </mapper>

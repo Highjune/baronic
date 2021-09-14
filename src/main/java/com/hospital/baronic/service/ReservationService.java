@@ -310,8 +310,17 @@ public class ReservationService {
         return reservation_time_list;
     }
 
+    // test api
     public List<ReservationResponseDto> getAllReservationList() throws Exception {
         return this.reservationMapper.getAllReservationList();
+    }
+
+    public int reserveCreate(Reservation reservation) throws Exception {
+        int result = this.reservationMapper.reserveCreate(reservation);
+
+        int id = reservation.getReservation_id();
+
+        return id;
     }
 }
 
