@@ -46,7 +46,7 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/reserve/create", method={RequestMethod.POST})
-        public int reserveCreate(@RequestBody Map<String, Object> params
+    public int reserveCreate(@RequestBody Map<String, Object> params
                 , HttpServletRequest request) throws Exception {
             String sessionId = "";
             if (request.getCookies() != null) {
@@ -57,8 +57,8 @@ public class ReservationController {
                     }
                 }
             }
-            if (!Optional.ofNullable(this.userService.checkSessionId(sessionId)).isPresent()) {
-//            return "invalid session";
+            if (!this.userService.checkSessionId(sessionId)) {
+    //            return "invalid session";
                 return -1;
             }
 
