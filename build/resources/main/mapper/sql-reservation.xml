@@ -40,4 +40,36 @@
         FROM baronic_db.reservation
     </select>
 
+    <insert id = "reserveCreate" parameterType="com.hospital.baronic.domain.reservation.Reservation" useGeneratedKeys="true" keyProperty="reservation_id" >
+        INSERT INTO baronic_db.reservation(
+                                            patient_name
+                                          , chart_id
+                                          , todo
+                                          , reservation_date_to
+                                          , owner
+        )
+        VALUES(
+                  #{patient_name}
+              , #{chart_id}
+              , #{todo}
+              , #{reservation_date_to}
+              , #{owner}
+              )
+    </insert>
+
+    <select id = "getOwnerSessionId" parameterType="int" resultType="String">
+        SELECT `owner`
+        FROM baronic_db.reservation
+        WHERE 1=1
+        AND reservation_id = #{reservation_id}
+    </select>
+
+    <update id = "reserveModify" parameterType="HashMap">
+        UPDATE baronic_db.reservation
+        SET reservation_date_to = #{dateTo}
+        WHERE 1=1
+        AND reservation_id = #{reservation_id}
+    </update>
+
+
 </mapper>
