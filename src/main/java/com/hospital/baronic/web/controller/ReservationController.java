@@ -82,4 +82,33 @@ public class ReservationController {
         return result;
     }
 
+    @RequestMapping(value = "/reserve/modify", method={RequestMethod.POST})
+    public String reserveModify(@RequestBody Map<String, Object> params
+            , HttpServletRequest request) throws Exception {
+
+        String sessionId = "";
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("sessionId")) {
+                    sessionId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        int reservation_id = (int) params.get("reservation_id");
+        String ownerSessionId = this.reservationService.getOwnerSessionId(reservation_id);
+        if (!sessionId.equals(ownerSessionId)) {
+            return "invalid sessionId. not same as ownerValue";
+        }
+
+        int result = this.reservationService.reserveModify(params);
+
+        if (result == 1) {
+            return "success";
+        } else {
+            return "fail";
+        }
+
+    }
 }

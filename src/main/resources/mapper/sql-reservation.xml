@@ -57,4 +57,19 @@
               )
     </insert>
 
+    <select id = "getOwnerSessionId" parameterType="int" resultType="String">
+        SELECT `owner`
+        FROM baronic_db.reservation
+        WHERE 1=1
+        AND reservation_id = #{reservation_id}
+    </select>
+
+    <update id = "reserveModify" parameterType="HashMap">
+        UPDATE baronic_db.reservation
+        SET reservation_date_to = #{dateTo}
+        WHERE 1=1
+        AND reservation_id = #{reservation_id}
+    </update>
+
+
 </mapper>

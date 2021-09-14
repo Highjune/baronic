@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReservationService {
@@ -321,6 +322,14 @@ public class ReservationService {
         int id = reservation.getReservation_id();
 
         return id;
+    }
+
+    public String getOwnerSessionId(int reservation_id) throws Exception {
+        return this.reservationMapper.getOwnerSessionId(reservation_id);
+    }
+
+    public int reserveModify(Map<String, Object> params) throws Exception {
+        return this.reservationMapper.reserveModify(params);
     }
 }
 

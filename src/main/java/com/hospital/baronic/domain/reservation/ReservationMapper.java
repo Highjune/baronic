@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ReservationMapper {
@@ -18,4 +19,8 @@ public interface ReservationMapper {
     List<ReservationResponseDto> getAllReservationList() throws Exception;
 
     int reserveCreate(Reservation reservation) throws Exception;
+
+    String getOwnerSessionId(int reservation_id) throws Exception;
+
+    int reserveModify(Map<String, Object> params) throws Exception;
 }
