@@ -1,19 +1,15 @@
 package com.hospital.baronic.web.dto;
 
 import com.hospital.baronic.domain.patient.Patient;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
-public class PatientResponseDto {
-    private String name;
-    private String gender;
-    private int age;
-    private String diagnosis_content;
+import java.util.Date;
 
-//    public PatientResponseDto(Patient entity){
-//        this.name = entity.getName();
-//        this.gender = entity.getGender();
-//        this.age = entity.getAge();
-//        this.diagnosis_content = entity.getDiagnosis_content();
-//    }
+@Data
+public class PatientResponseDto {
+    private int chart_id;
+    private String name;
+    private String insert_time;
+    private String update_time;
 }
